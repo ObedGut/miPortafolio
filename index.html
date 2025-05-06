@@ -1,478 +1,251 @@
-<!DOCTYPE HTML>
-<!--
-	Dimension by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>William Gutierrez</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portafolio de William Gutierrez, desarrollador de apps móviles.">
+  <title>William Gutierrez | Mobile Developer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+    section {
+      padding: 4rem 0;
+    }
+    header {
+      background: linear-gradient(to right, #0d6efd, #6610f2);
+      color: white;
+      text-align: center;
+      padding: 5rem 1rem;
+    }
+    .profile-img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      margin-bottom: 1rem;
+    }
+    .social-icons a {
+      font-size: 1.5rem;
+      color: white;
+      margin: 0 15px;
+    }
+    .social-icons a:hover {
+      color: #dcdcdc;
+    }
+    .carousel-inner img {
+      max-height: 400px;
+      object-fit: contain;
+      width: auto;
+      margin: auto;
+    }
+    .tech-icons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .tech-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+    .tech-icon i {
+      font-size: 2rem;
+      color: #0d6efd;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .tech-icon span {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(10px);
+    }
+    .tech-icon:hover {
+      transform: scale(1.8);
+    }
+    .tech-icon:hover span {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    h2 {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    footer {
+      background-color: #212529;
+      color: #f8f9fa;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+  <header>
+    <img src="images/me.jpg" alt="William Gutierrez" class="profile-img" data-aos="zoom-in">
+    <h1 data-aos="fade-up">William Gutierrez</h1>
+    <p data-aos="fade-up" data-aos-delay="100">Junior Mobile App Developer</p>
+    <div class="social-icons" data-aos="fade-up" data-aos-delay="200">
+      <a href="https://www.linkedin.com/in/william-obed-gutierrez-flores-46ba2421a/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/ObedGut" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+  </header>
 
-				<!-- Header -->
-					<header id="header">
-						<div class="content">
-							<div class="inner">
-								<h1>William Gutierrez</h1>
-								<p>Junior Mobile App Developer</p>
-							</div>
-						</div>
-						<nav>
-							<ul>
-								<!-- <li><a href="#intro">Intro</a></li> -->
-								<li><a href="#about">About</a></li>
-								<li><a href="#work">Work</a></li>
-								<li><a href="#contact">Contact</a></li>
-								<!--<li><a href="#elements">Elements</a></li>-->
-							</ul>
-						</nav>
-					</header>
+  <main class="container">
+    <section id="about" data-aos="fade-up">
+      <h2>Sobre mí</h2>
+      <p class="lead">Soy William Gutierrez. Técnico en desarrollo de aplicaciones móviles. 
+		Estudiante de Ingenieria en Ciencias de la computacion. Creo aplicaciones intuitivas, funcionales y visualmente atractivas.
+		Mi experiencia incluye el desarrollo con Kotlin y Firebase para Android, Laravel para backend, y tecnologías web como HTML, CSS, JavaScript y C# con .NET. También he explorado entornos híbridos como React Native y actualmente me encuentro aprendiendo Swift para expandirme al ecosistema iOS. Me apasiona convertir ideas en productos reales y crecer constantemente como profesional.
+		Busco soluciones a problemas usando la documentación oficial o usando las nuevas herramientas de nuestra época como lo es la IA.
+	  </p>
+      <div class="tech-icons">
+        <div class="tech-icon"><i class="fab fa-html5"></i><span>HTML</span></div>
+        <div class="tech-icon"><i class="fab fa-css3-alt"></i><span>CSS</span></div>
+        <div class="tech-icon"><i class="fas fa-code"></i><span>Kotlin</span></div>
+        <div class="tech-icon"><i class="fab fa-js"></i><span>JavaScript</span></div>
+        <div class="tech-icon"><i class="fas fa-hashtag"></i><span>C#</span></div>
+        <div class="tech-icon"><i class="fas fa-circle-nodes"></i><span>.NET</span></div>
+        <div class="tech-icon"><i class="fab fa-php"></i><span>PHP</span></div>
+        <div class="tech-icon"><i class="fab fa-laravel"></i><span>Laravel</span></div>
+        <div class="tech-icon"><i class="fab fa-apple"></i><span>Swift</span></div>
+      </div>
+    </section>
 
-				<!-- Main -->
-					<div id="main">
+    <section id="projects" data-aos="fade-up">
+      <h2>Proyectos</h2>
+      <div class="accordion" id="accordionProjects">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+              App de Salón de Belleza
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionProjects">
+            <div class="accordion-body">
+              <div id="carouselOne" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active"><img src="images/1.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/2.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/3.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/4.jpeg" class="d-block"></div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselOne" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselOne" data-bs-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-						<!-- Intro -->
-							<article id="intro">
-								<h2 class="major">Intro</h2>
-								<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-								<p>William Gutierrez</p>
-							</article>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+              App de Dentista
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionProjects">
+            <div class="accordion-body">
+              <div id="carouselTwo" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active"><img src="images/5.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/6.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/7.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/8.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/9.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/10.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/11.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/12.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/13.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/14.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/15.jpeg" class="d-block"></div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselTwo" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselTwo" data-bs-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-						<!-- Work -->
-							<article id="work">
-								<h2 class="major">Work</h2>
-								<h3>Mis Trabajos</h3>
-								<div class="slideshow-container">
-								
-								<div class="mySlides fade">
-								  <div class="numbertext">1 / 17</div>
-								  <img src="images/1.jpeg" style="width:70%">
-								  <div class="text">App de salon de belleza</div>
-								</div>
-								<div class="mySlides fade">
-								  <div class="numbertext">2 / 17</div>
-								  <img src="images/2.jpeg" style="width:70%">
-								</div>
-								<div class="mySlides fade">
-								  <div class="numbertext">3 / 17</div>
-								  <img src="images/3.jpeg" style="width:70%">
-								</div>
-								<div class="mySlides fade">
-									<div class="numbertext">4 / 17</div>
-									<img src="images/4.jpeg" style="width:70%">
-								  </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+              App para tienda de Ropa Muravi
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionProjects">
+            <div class="accordion-body">
+              <div id="carouselThree" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active"><img src="images/16.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/17.jpeg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/18.jpg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/19.jpg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/20.jpg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/21.jpg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/22.jpg" class="d-block"></div>
+                  <div class="carousel-item"><img src="images/23.jpg" class="d-block"></div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselThree" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselThree" data-bs-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-								<div class="mySlides fade">
-									<div class="numbertext">5 / 17</div>
-									<img src="images/5.jpeg" style="width:70%">
-									<div class="text">App de dentista</div>
-								</div>
-								<div class="mySlides fade">
-									<div class="numbertext">6 / 17</div>
-									<img src="images/6.jpeg" style="width:70%">
-								  </div>
-								  <div class="mySlides fade">
-									<div class="numbertext">7 / 17</div>
-									<img src="images/7.jpeg" style="width:70%">
-								  </div>
-								  <div class="mySlides fade">
-									<div class="numbertext">8 / 17</div>
-									<img src="images/8.jpeg" style="width:70%">
-								  </div>
-								  <div class="mySlides fade">
-									<div class="numbertext">9 / 17</div>
-									<img src="images/9.jpeg" style="width:70%">
-								  </div>
-								  <div class="mySlides fade">
-									<div class="numbertext">10 / 17</div>
-									<img src="images/10.jpeg" style="width:100%">
-								  </div>
-								  <div class="mySlides fade">
-									<div class="numbertext">11 / 17</div>
-									<img src="images/11.jpeg" style="width:70%">
-								  </div>    
-								  <div class="mySlides fade">
-									<div class="numbertext">12 / 17</div>
-									<img src="images/12.jpeg" style="width:70%">
-								  </div>
-								  <div class="mySlides fade">
-									<div class="numbertext">13 / 17</div>
-									<img src="images/13.jpeg" style="width:70%">
-								  </div>
-								  <div class="mySlides fade">
-									<div class="numbertext">14 / 17</div>
-									<img src="images/14.jpeg" style="width:70%">
-								  </div>
-								  <div class="mySlides fade">
-									<div class="numbertext">15 / 17</div>
-									<img src="images/15.jpeg" style="width:100%">
-								  </div>    
-								  <div class="mySlides fade">
-									<div class="numbertext">16 / 17</div>
-									<img src="images/16.jpeg" style="width:70%">
-									<div class="text">actualmente en desarrollo</div>
-								  </div> 
-								  <div class="mySlides fade">
-									<div class="numbertext">17 / 17</div>
-									<img src="images/17.jpeg" style="width:70%">
-									<div class="text">actualmente en desarrollo</div>
-								  </div> 
-								</div>
-								<br>
-								
-								<div style="text-align:center">
-								  <span class="dot"></span> 
-								  <span class="dot"></span> 
-								  <span class="dot"></span> 
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								  <span class="dot"></span>
-								</div>
-								
-								<script>
-								var slideIndex = 0;
-								showSlides();
-								
-								function showSlides() {
-								  var i;
-								  var slides = document.getElementsByClassName("mySlides");
-								  var dots = document.getElementsByClassName("dot");
-								  for (i = 0; i < slides.length; i++) {
-									slides[i].style.display = "none";  
-								  }
-								  slideIndex++;
-								  if (slideIndex > slides.length) {slideIndex = 1}    
-								  for (i = 0; i < dots.length; i++) {
-									dots[i].className = dots[i].className.replace(" active", "");
-								  }
-								  slides[slideIndex-1].style.display = "block";  
-								  dots[slideIndex-1].className += " active";
-								  setTimeout(showSlides, 4000); 
-								}
-								</script>
-								<p>Aqui se muestran algunos de los trabajos que he realizado hasta el momento, la mayoria de estos desarrollados en Kotlin nativamente para android</p>
-							</article>
+      </div>
+    </section>
 
-						<!-- About -->
-							<article id="about">
-								<h2 class="major">About</h2>
-								<span class="image main"><img src="images/me.jpg" alt="" /></span>
-								<p>Estudiante de último ciclo en Técnico en desarrollo de aplicaciones móviles, busco hacer experiencia en el campo y mejorar mis habilidades de desarrollo móvil aplicando los conocimientos técnicos adquiridos. Soy un apasionado por los deportes, mi deporte favorito es el baloncesto, me gustan los videojuegos y ejercitarme. Me gusta la cultura Italiana y estoy aprendiendo Italiano por mi cuenta</p>
-								<p>Trabajé un mes en la elaboración de un proyecto en laravel sobre un panel de control.</p>
-								<p>He utilizado Kotlin usando firebase, implementando APIs, y diferentes librerias como Lottie, Google maps, entre otras.</p>
-								<p>De igual manera he Javascript orientado a web y a dispositivos móviles por medio de React Native y como mencione anteriormente usé PHP con Laravel.</p>
-								<p>Aprendiendo actualmente Swift para desarrollar aplicaciones IOS de manera nativa.</p>
-								<p>Manejo Git con GitHub para el versionamiento de mis proyectos</p>
-							</article>
+    <section id="contact" data-aos="fade-up">
+      <h2>Contacto</h2>
+      <form action="https://formspree.io/f/mjvjjloy" method="POST" class="mx-auto" style="max-width: 600px;">
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" name="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Mensaje</label>
+          <textarea name="message" class="form-control" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
+    </section>
+  </main>
 
-						<!-- Contact -->
-							<article id="contact">
-								<h2 class="major">Contact</h2>
-								<form method="POST" action="https://formspree.io/f/mjvjjloy">
-									<div class="fields">
-										<div class="field half">
-											<label for="name">Name</label>
-											<input type="text" name="name" id="name" />
-										</div>
-										<div class="field half">
-											<label for="email">Email</label>
-											<input type="text" name="email" id="email" />
-										</div>
-										<div class="field">
-											<label for="message">Message</label>
-											<textarea name="message" id="message" rows="4"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Send Message" class="primary" /></li>
-										<li><input type="reset" value="Reset" /></li>
-									</ul>
-								</form>
-								<ul class="icons">
-									<li><a href="https://www.linkedin.com/in/william-obed-gutierrez-flores-46ba2421a/" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
-									<li><a href="https://github.com/ObedGut" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-								</ul>
-							</article>
+  <footer>
+    <p>&copy; William Gutierrez 2025</p>
+  </footer>
 
-						<!-- Elements -->
-							<article id="elements">
-								<h2 class="major">Elements</h2>
-
-								<section>
-									<h3 class="major">Text</h3>
-									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
-									<hr />
-									<h2>Heading Level 2</h2>
-									<h3>Heading Level 3</h3>
-									<h4>Heading Level 4</h4>
-									<h5>Heading Level 5</h5>
-									<h6>Heading Level 6</h6>
-									<hr />
-									<h4>Blockquote</h4>
-									<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
-									<h4>Preformatted</h4>
-									<pre><code>i = 0;
-
-while (!deck.isInOrder()) {
-    print 'Iteration ' + i;
-    deck.shuffle();
-    i++;
-}
-
-print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
-								</section>
-
-								<section>
-									<h3 class="major">Lists</h3>
-
-									<h4>Unordered</h4>
-									<ul>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
-
-									<h4>Alternate</h4>
-									<ul class="alt">
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
-
-									<h4>Ordered</h4>
-									<ol>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis viverra.</li>
-										<li>Felis enim feugiat.</li>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis lorem.</li>
-										<li>Felis enim et feugiat.</li>
-									</ol>
-									<h4>Icons</h4>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-									</ul>
-
-									<h4>Actions</h4>
-									<ul class="actions">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions stacked">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-								</section>
-
-								<section>
-									<h3 class="major">Table</h3>
-									<h4>Default</h4>
-									<div class="table-wrapper">
-										<table>
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
-
-									<h4>Alternate</h4>
-									<div class="table-wrapper">
-										<table class="alt">
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
-								</section>
-
-								<section>
-									<h3 class="major">Buttons</h3>
-									<ul class="actions">
-										<li><a href="#" class="button primary">Primary</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button">Default</a></li>
-										<li><a href="#" class="button small">Small</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button primary icon solid fa-download">Icon</a></li>
-										<li><a href="#" class="button icon solid fa-download">Icon</a></li>
-									</ul>
-									<ul class="actions">
-										<li><span class="button primary disabled">Disabled</span></li>
-										<li><span class="button disabled">Disabled</span></li>
-									</ul>
-								</section>
-
-								<section>
-									<h3 class="major">Form</h3>
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field half">
-												<label for="demo-name">Name</label>
-												<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
-											</div>
-											<div class="field half">
-												<label for="demo-email">Email</label>
-												<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
-											</div>
-											<div class="field">
-												<label for="demo-category">Category</label>
-												<select name="demo-category" id="demo-category">
-													<option value="">-</option>
-													<option value="1">Manufacturing</option>
-													<option value="1">Shipping</option>
-													<option value="1">Administration</option>
-													<option value="1">Human Resources</option>
-												</select>
-											</div>
-											<div class="field half">
-												<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-												<label for="demo-priority-low">Low</label>
-											</div>
-											<div class="field half">
-												<input type="radio" id="demo-priority-high" name="demo-priority">
-												<label for="demo-priority-high">High</label>
-											</div>
-											<div class="field half">
-												<input type="checkbox" id="demo-copy" name="demo-copy">
-												<label for="demo-copy">Email me a copy</label>
-											</div>
-											<div class="field half">
-												<input type="checkbox" id="demo-human" name="demo-human" checked>
-												<label for="demo-human">Not a robot</label>
-											</div>
-											<div class="field">
-												<label for="demo-message">Message</label>
-												<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-											</div>
-										</div>
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" class="primary" /></li>
-											<li><input type="reset" value="Reset" /></li>
-										</ul>
-									</form>
-								</section>
-
-							</article>
-
-					</div>
-
-				<!-- Footer -->
-					<footer id="footer">
-						<p class="copyright">&copy; William Gutierrez ~ 2021</p>
-					</footer>
-
-			</div>
-
-		<!-- BG -->
-			<div id="bg"></div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>AOS.init({ once: true });</script>
+</body>
 </html>
