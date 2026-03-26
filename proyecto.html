@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Proyecto | William Gutierrez</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #00f2ff; 
+            --bg: #02040a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-dim: #888;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; filter: blur(80px); opacity: 0.15; }
+
+        .container { max-width: 1600px; margin: 0 auto; width: 100%; padding: 3% 5%; }
+
+        .btn-back {
+            display: inline-flex; align-items: center; gap: 10px;
+            color: var(--primary); text-decoration: none; font-family: 'Unbounded';
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            margin-bottom: 2rem; transition: 0.3s; cursor: pointer;
+        }
+        .btn-back:hover { letter-spacing: 2px; color: #fff; }
+
+        .project-grid { 
+            display: grid; 
+            grid-template-columns: 0.6fr 1.4fr; 
+            gap: 4rem; 
+            align-items: flex-start; 
+        }
+
+        .project-header h1 { font-family: 'Unbounded'; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 1.5rem; }
+        .meta-item span { display: block; font-size: 0.6rem; color: var(--primary); font-family: 'Unbounded'; margin-bottom: 5px; opacity: 0.6; }
+        .meta-item p { font-weight: 700; font-size: 1rem; margin-bottom: 1.5rem; }
+
+        .content-section { margin-bottom: 2.5rem; }
+        .content-section h2 { font-family: 'Unbounded'; font-size: 0.7rem; color: var(--primary); margin-bottom: 1rem; letter-spacing: 1px; }
+        .content-section p { color: var(--text-dim); line-height: 1.8; font-size: 1.1rem; max-width: 90%; }
+
+        /* Estilos de la lista de actividades */
+        .activity-list { list-style: none; padding: 0; }
+        .activity-item { 
+            display: flex; align-items: flex-start; gap: 12px;
+            color: var(--text-dim); margin-bottom: 12px; line-height: 1.6;
+            font-size: 1rem;
+        }
+        .activity-item i { color: var(--primary); font-size: 0.8rem; margin-top: 5px; opacity: 0.8; }
+
+        /* VISUALIZADORES */
+        .visual-container { display: flex; justify-content: flex-start; align-items: center; width: 100%; position: sticky; top: 5%; }
+
+        .phone-frame {
+            width: 320px; height: 650px;
+            background: #000; border: 12px solid #1a1a1a;
+            border-radius: 45px; position: relative;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            overflow: hidden; display: none; margin: 0 auto;
+        }
+        .phone-frame::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 25px; background: #1a1a1a; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 10;
+        }
+
+        .desktop-frame {
+            width: 135%; 
+            aspect-ratio: 16/10;
+            background: #000; border: 12px solid #222;
+            border-radius: 24px; position: relative;
+            box-shadow: 0 80px 150px rgba(0,0,0,0.9), 0 0 50px rgba(0, 242, 255, 0.1);
+            overflow: hidden; display: none;
+            transform: translateX(-8%);
+        }
+        .desktop-frame::before {
+            content: '● ● ●'; color: #444; font-size: 9px; padding-left: 20px;
+            display: flex; align-items: center;
+            height: 35px; background: #222; width: 100%;
+        }
+
+        .screen-carousel {
+            width: 100%; height: 100%; position: relative;
+            display: flex; transition: transform 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+        .screen-carousel img { 
+            width: 100%; height: 100%; 
+            object-fit: contain; 
+            background-color: #000;
+            flex-shrink: 0; 
+        }
+
+        .touch-area { position: absolute; top: 0; width: 30%; height: 100%; z-index: 5; cursor: pointer; }
+        .touch-left { left: 0; }
+        .touch-right { right: 0; }
+
+        @media (max-width: 1300px) {
+            .desktop-frame { width: 100%; transform: none; }
+            .project-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .visual-container { justify-content: center; position: relative; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="container">
+        <a href="javascript:void(0);" onclick="window.history.back();" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver a portafolio
+        </a>
+
+        <div class="project-grid">
+            <div class="info-col">
+                <header class="project-header">
+                    <h1 id="p-title">-</h1>
+                    <div class="meta-item"><span>TECNOLOGÍAS</span><p id="p-stack">-</p></div>
+                    <div class="meta-item"><span>MI ROL</span><p id="p-role">-</p></div>
+                </header>
+
+                <section class="content-section">
+                    <h2>LOGIC_CORE</h2>
+                    <p id="p-desc">-</p>
+                </section>
+
+                <section class="content-section">
+                    <h2>KEY_CONTRIBUTIONS</h2>
+                    <ul class="activity-list" id="p-activities">
+                        </ul>
+                </section>
+            </div>
+
+            <div class="visual-container">
+                <div class="phone-frame" id="frame-mobile">
+                    <div class="touch-area touch-left" onclick="moveSlide(-1)"></div>
+                    <div class="touch-area touch-right" onclick="moveSlide(1)"></div>
+                    <div class="screen-carousel" id="carousel-mobile"></div>
+                </div>
+
+                <div class="desktop-frame" id="frame-desktop">
+                    <div class="touch-area touch-left" onclick="moveSlide(-1)"></div>
+                    <div class="touch-area touch-right" onclick="moveSlide(1)"></div>
+                    <div class="screen-carousel" id="carousel-desktop"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const projectsData = {
+            "muravi": {
+                title: "Muravi",
+                stack: "Kotlin / Firebase",
+                role: "Desarrollador Android",
+                desc: "Desarrollé una arquitectura robusta que permite el seguimiento en tiempo real de existencias por talla, color y temporada, integrando un módulo de ventas dinámico que genera reportes de rentabilidad automáticos.",
+                isMobile: true,
+                activities: [
+                    "Diseño de arquitectura MVVM escalable.",
+                    "Integración Firebase para control de stock.",
+                    "Integración de seguridad por biometria.",
+                    "Testing automatizado de componentes críticos.",
+                    "Creación de CRUD para agregar prendas, o registrar ventas para generar reportes."
+                ],
+                images: ["images/16.jpeg", "images/17.jpeg", "images/18.jpg", "images/19.jpg", "images/20.jpg", "images/21.jpg", "images/22.jpg", "images/23.jpg"]
+            },
+            "salon": {
+                title: "App Salon",
+                stack: "Java / Firebase",
+                role: "Desarrollador Android",
+                desc: "Desarrollé una aplicación móvil para la gestión de servicios de un salón de belleza, integrando un sistema de reservas en tiempo real y notificaciones push.",
+                isMobile: true,
+                activities: [
+                    "Diseño de arquitectura MVVM escalable.",
+                    "Integración Firebase para control de citas.",
+                    "Creación de CRUD para control de las citas."
+                ],
+                images: ["images/1.jpeg", "images/2.jpeg", "images/3.jpeg", "images/4.jpeg",]
+            },
+            "dentist": {
+                title: "App Dentista",
+                stack: "Java / Firebase",
+                role: "Desarrollador Android",
+                desc: "Desarrollé una Aplicacion movil nativa android para gestionar citas en un consultorio dental. Tambien incluye un sistema de notificaciones y recordatorios, ademas de dar consejos de higiene bucal..",
+                isMobile: true,
+                activities: [
+                    "Diseño de arquitectura MVVM escalable.",
+                    "Integración Firebase para control de citas.",
+                    "Testing automatizado de componentes críticos.",
+                    "Creación de CRUD para agregar citas",
+                    "Intregacion de notificaciones push para recordatorios de citas y consejos de higiene bucal."
+                ],
+                images: ["images/5.jpeg", "images/6.jpeg", "images/7.jpeg", "images/8.jpeg", "images/9.jpeg", "images/10.jpeg", "images/11.jpeg", "images/12.jpeg", "images/13.jpeg", "images/14.jpeg", "images/15.jpeg"]
+            },
+            "privatikaL": {
+                title: "Privatika Landing",
+                stack: "vite.js / Tailwind CSS",
+                role: "Desarrollador Frontend",
+                desc: "Desarrollé una landing page de alto rendimiento para Privatika, optimizada para SEO, utilizando Vite.js y Tailwind CSS para una experiencia de usuario fluida y atractiva.",
+                isMobile: false,
+                activities: [
+                    "Desarrollo de componentes UI reutilizables.",
+                    "Optimización de SEO y Core Web Vitals.",
+                    "Implementación de animaciones fluidas.",
+                    "Consumir API REST para el envio de mails."
+                ],
+                images: ["images/24.jpg", "images/25.jpg", "images/26.jpg", "images/27.jpg", "images/28.jpg", "images/29.jpg"]
+            },
+            "privatika": {
+                title: "Privatika App",
+                stack: "vite.js / Tailwind CSS",
+                role: "Desarrollador Frontend",
+                desc: "Desarrollé un panel administrativo robusto para gestión de Terminos y Condiciones de paginas web. Estuve encargado del Frontend de dicho dashboard.",
+                isMobile: false,
+                activities: [
+                    "Desarrollo de Dashboard interactivo.",
+                    "Gestión de estados globales complejos.",
+                    "Implementación de sistema de roles y permisos.",
+                    "Consumir API REST para funcionalidades como creacion de usuarios, creacion de terminos y condiciones y generacion de keys para conectar apps o paginas web."
+                ],
+                images: ["images/30.jpg", "images/31.jpg", "images/32.jpg", "images/33.jpg"]
+            },
+            "skyfleeter": {
+                title: "Skyfleeter",
+                stack: ".NET / C# / SQL",
+                role: "Desarrollador Full Stack",
+                desc: "Solución empresarial para monitoreo de flotas avanzada. Desarrollé varias actividades dentro de la aplicación web, detalladas abajo. Por motivos de confidencialidad las capturas de pantalla no estan disponibles, pero se pueden mostrar en una entrevista técnica.",
+                isMobile: false,
+                activities: [
+                    "Espacio para crear tickets de reportes para soporte técnico.",
+                    "Generacion de QR de codigos de equipos y su respectivo QR para su inspección.",
+                    "Generación de PDFs con dichos codigos QR.",
+                    "Implementación de sistema de notificaciones via mail para cuando los vehiculos necesiten mantenimiento o inspeccion.",
+                    "Sistema de ingreso de documentación de conductores.",
+                    "App movil para rastreo de viajes realizados por la flota, con geolocalización en tiempo real, control de viajes por conductor y control de rutas."
+                ],
+                images: ["images/34.jpg"]
+            }
+        };
+
+        let currentIndex = 0;
+        let totalImages = 0;
+        let activeTrack = null;
+
+        function moveSlide(direction) {
+            if (totalImages <= 1) return;
+            currentIndex = (currentIndex + direction + totalImages) % totalImages;
+            gsap.to(activeTrack, { x: `-${currentIndex * 100}%`, duration: 0.8, ease: "power3.out" });
+        }
+
+        function loadProject() {
+            const params = new URLSearchParams(window.location.search);
+            const projectId = params.get('id');
+            const data = projectsData[projectId] || projectsData["muravi"];
+
+            // Texto básico
+            document.getElementById('p-title').innerText = data.title;
+            document.getElementById('p-stack').innerText = data.stack;
+            document.getElementById('p-role').innerText = data.role;
+            document.getElementById('p-desc').innerText = data.desc;
+
+            // Cargar Actividades
+            const activityContainer = document.getElementById('p-activities');
+            activityContainer.innerHTML = ""; // Limpiar
+            data.activities.forEach(act => {
+                const li = document.createElement('li');
+                li.className = "activity-item";
+                li.innerHTML = `<i class="fas fa-chevron-right"></i> <span>${act}</span>`;
+                activityContainer.appendChild(li);
+            });
+
+            // Lógica de Frames
+            const isMobile = data.isMobile;
+            const frameId = isMobile ? 'frame-mobile' : 'frame-desktop';
+            const trackId = isMobile ? 'carousel-mobile' : 'carousel-desktop';
+            
+            const activeFrame = document.getElementById(frameId);
+            activeTrack = document.getElementById(trackId);
+            activeFrame.style.display = 'block';
+
+            // Cargar Imágenes
+            totalImages = data.images.length;
+            data.images.forEach(imgSrc => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                activeTrack.appendChild(img);
+            });
+
+            // Animaciones de entrada
+            gsap.from(".info-col", { opacity: 0, x: -30, duration: 1 });
+            gsap.from(".activity-item", { opacity: 0, x: -20, duration: 0.5, stagger: 0.1, delay: 0.5 });
+            gsap.from(activeFrame, { opacity: 0, scale: 0.95, duration: 1.2, delay: 0.2 });
+
+            if(totalImages > 1) setInterval(() => moveSlide(1), 5000);
+        }
+
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+        function animate() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = 'rgba(0, 242, 255, 0.05)';
+            ctx.beginPath(); ctx.arc(canvas.width*0.8, canvas.height*0.5, 400, 0, Math.PI*2); ctx.fill();
+            requestAnimationFrame(animate);
+        }
+        animate();
+        loadProject();
+    </script>
+</body>
+</html>

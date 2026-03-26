@@ -1,251 +1,411 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portafolio de William Gutierrez, desarrollador de apps móviles.">
-  <title>William Gutierrez | Mobile Developer</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f8f9fa;
-      color: #212529;
-    }
-    section {
-      padding: 4rem 0;
-    }
-    header {
-      background: linear-gradient(to right, #0d6efd, #6610f2);
-      color: white;
-      text-align: center;
-      padding: 5rem 1rem;
-    }
-    .profile-img {
-      width: 140px;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 4px solid #fff;
-      margin-bottom: 1rem;
-    }
-    .social-icons a {
-      font-size: 1.5rem;
-      color: white;
-      margin: 0 15px;
-    }
-    .social-icons a:hover {
-      color: #dcdcdc;
-    }
-    .carousel-inner img {
-      max-height: 400px;
-      object-fit: contain;
-      width: auto;
-      margin: auto;
-    }
-    .tech-icons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    .tech-icon {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform 0.3s ease;
-    }
-    .tech-icon i {
-      font-size: 2rem;
-      color: #0d6efd;
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-    .tech-icon span {
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-      opacity: 0;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      transform: translateY(10px);
-    }
-    .tech-icon:hover {
-      transform: scale(1.8);
-    }
-    .tech-icon:hover span {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    h2 {
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-    footer {
-      background-color: #212529;
-      color: #f8f9fa;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>William Gutierrez | Mobile Architect</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
+    
+    <style>
+        :root {
+            --primary: #00f2ff; 
+            --secondary: #7000ff;
+            --bg: #02040a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-dim: #888;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: default; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+        }
+
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; filter: blur(80px); opacity: 0.15;
+        }
+
+        #page-transition {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 9999; display: none; opacity: 0;
+            pointer-events: none;
+        }
+
+        section, header {
+            height: 100vh; width: 100%; display: flex;
+            flex-direction: column; justify-content: center;
+            padding: 0 10%; scroll-snap-align: start; position: relative;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; width: 100%; }
+
+        /* --- HERO --- */
+        .name-wrapper {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-weight: 900; line-height: 1.1; color: #fff;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+            perspective: 1000px;
+        }
+
+        .word-reveal {
+            opacity: 0; transform: translateY(30px) rotateX(-20deg);
+            filter: blur(10px); display: inline-block;
+        }
+
+        .tagline {
+            font-size: 0.8rem; letter-spacing: 0.4em; text-transform: uppercase;
+            color: var(--primary); font-weight: 700; opacity: 0.7; margin-top: 1rem;
+        }
+
+        .scroll-indicator {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center;
+            gap: 10px; color: var(--text-dim); opacity: 0.6; animation: fadeInOut 2s infinite ease-in-out;
+            cursor: pointer;
+        }
+        .scroll-indicator::after { content: ''; width: 20px; height: 30px; border: 2px solid var(--text-dim); border-radius: 10px; position: relative; }
+        .scroll-indicator::before {
+            content: ''; width: 4px; height: 8px; background-color: var(--primary); border-radius: 2px;
+            position: absolute; top: 38px; animation: scrollPulse 1.5s infinite;
+        }
+        @keyframes scrollPulse { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(12px); } }
+        @keyframes fadeInOut { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+
+        /* --- DASHBOARD --- */
+        .section-title {
+            font-family: 'Unbounded', sans-serif; font-size: 1rem; color: var(--primary);
+            margin-bottom: 2rem; display: flex; align-items: center; gap: 15px; text-transform: uppercase;
+        }
+        .section-title::after { content: ''; height: 1px; flex: 1; background: linear-gradient(90deg, var(--primary), transparent); }
+
+        .dashboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; width: 100%; }
+
+        .tile {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 24px; padding: 2rem; backdrop-filter: blur(15px);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .tile:hover { 
+            border-color: var(--primary); transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 242, 255, 0.1); 
+        }
+
+        .tile-profile { grid-column: span 1; display: flex; justify-content: center; align-items: center; padding: 1rem; }
+        .photo-container { width: 100%; aspect-ratio: 1/1; border-radius: 18px; overflow: hidden; border: 1px solid var(--card-border); position: relative; }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: 0.5s ease; }
+        .photo-container:hover img { filter: grayscale(0); }
+
+        .tile-about { grid-column: span 2; }
+        .tile-skills { grid-column: span 1; grid-row: span 2; }
+        
+        .tech-item {
+            background: rgba(255,255,255,0.02); padding: 14px; border-radius: 12px;
+            display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.8rem; margin-bottom: 10px;
+        }
+        .tech-item i { color: var(--primary); font-size: 1.1rem; }
+        .location-wrapper { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .fi { border-radius: 2px; }
+
+        /* CV BUTTONS */
+        .cv-container { margin-top: 15px; display: flex; flex-direction: column; gap: 8px; }
+        .btn-cv {
+            text-decoration: none; font-size: 0.65rem; font-family: 'Unbounded';
+            color: #fff; background: rgba(255,255,255,0.05); padding: 10px;
+            border-radius: 10px; border: 1px solid var(--card-border);
+            display: flex; align-items: center; justify-content: space-between;
+            transition: 0.3s; cursor: pointer;
+        }
+        .btn-cv:hover { border-color: var(--primary); background: rgba(0, 242, 255, 0.1); }
+
+        /* --- SHOWCASE --- */
+        #proyectos { height: auto; padding: 10vh 10%; scroll-snap-align: none; }
+        .project-card {
+            display: flex; background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 40px; overflow: hidden; width: 100%; height: 60vh; margin-bottom: 5vh;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s;
+        }
+        .project-info { padding: 4rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .project-visual { flex: 1.2; background: radial-gradient(circle at center, #0a0e1a, #02040a); display: flex; justify-content: center; align-items: center; padding: 20px; }
+        
+        /* Mockups */
+        .phone-mockup { width: 220px; height: 450px; background: #000; border: 12px solid #1a1a1a; border-radius: 45px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.8); }
+        .desktop-mockup { width: 90%; height: 80%; background: #1a1a1a; border-radius: 15px; border: 8px solid #333; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.8); }
+        .phone-mockup img, .desktop-mockup img { width: 100%; height: 100%; object-fit: cover; }
+
+        .btn-open {
+            margin-top: 2rem; padding: 14px 28px; border: 1px solid var(--primary);
+            background: transparent; color: var(--primary); font-family: 'Unbounded';
+            font-size: 0.65rem; font-weight: 700; border-radius: 12px;
+            text-transform: uppercase; letter-spacing: 2px;
+            width: fit-content; transition: 0.3s; cursor: pointer;
+        }
+        .btn-open:hover { background: var(--primary); color: var(--bg); box-shadow: 0 0 20px rgba(0, 242, 255, 0.3); }
+
+        /* FOOTER */
+        footer { padding: 4rem 10%; border-top: 1px solid var(--card-border); color: var(--text-dim); font-size: 0.75rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 1rem; }
+        .footer-links a { color: var(--text-dim); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--primary); }
+
+        @media (max-width: 1100px) {
+            section, header { padding: 5rem 5%; height: auto; min-height: 100vh; scroll-snap-align: none; }
+            .dashboard { grid-template-columns: 1fr; }
+            .tile-about, .tile-skills, .tile-profile { grid-column: span 1; }
+            .project-card { flex-direction: column; height: auto; }
+            .project-visual { height: 400px; order: -1; }
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-    <img src="images/me.jpg" alt="William Gutierrez" class="profile-img" data-aos="zoom-in">
-    <h1 data-aos="fade-up">William Gutierrez</h1>
-    <p data-aos="fade-up" data-aos-delay="100">Junior Mobile App Developer</p>
-    <div class="social-icons" data-aos="fade-up" data-aos-delay="200">
-      <a href="https://www.linkedin.com/in/william-obed-gutierrez-flores-46ba2421a/" target="_blank"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/ObedGut" target="_blank"><i class="fab fa-github"></i></a>
-    </div>
-  </header>
+    <div id="page-transition"></div>
+    <canvas id="bg-canvas"></canvas>
 
-  <main class="container">
-    <section id="about" data-aos="fade-up">
-      <h2>Sobre mí</h2>
-      <p class="lead">Soy William Gutierrez. Técnico en desarrollo de aplicaciones móviles. 
-		Estudiante de Ingenieria en Ciencias de la computacion. Creo aplicaciones intuitivas, funcionales y visualmente atractivas.
-		Mi experiencia incluye el desarrollo con Kotlin y Firebase para Android, Laravel para backend, y tecnologías web como HTML, CSS, JavaScript y C# con .NET. También he explorado entornos híbridos como React Native y actualmente me encuentro aprendiendo Swift para expandirme al ecosistema iOS. Me apasiona convertir ideas en productos reales y crecer constantemente como profesional.
-		Busco soluciones a problemas usando la documentación oficial o usando las nuevas herramientas de nuestra época como lo es la IA.
-	  </p>
-      <div class="tech-icons">
-        <div class="tech-icon"><i class="fab fa-html5"></i><span>HTML</span></div>
-        <div class="tech-icon"><i class="fab fa-css3-alt"></i><span>CSS</span></div>
-        <div class="tech-icon"><i class="fas fa-code"></i><span>Kotlin</span></div>
-        <div class="tech-icon"><i class="fab fa-js"></i><span>JavaScript</span></div>
-        <div class="tech-icon"><i class="fas fa-hashtag"></i><span>C#</span></div>
-        <div class="tech-icon"><i class="fas fa-circle-nodes"></i><span>.NET</span></div>
-        <div class="tech-icon"><i class="fab fa-php"></i><span>PHP</span></div>
-        <div class="tech-icon"><i class="fab fa-laravel"></i><span>Laravel</span></div>
-        <div class="tech-icon"><i class="fab fa-apple"></i><span>Swift</span></div>
-      </div>
+    <header>
+        <div class="container">
+            <h1 class="name-wrapper">
+                <span class="word-reveal">WILLIAM</span><br>
+                <span class="word-reveal">GUTIERREZ</span>
+            </h1>
+            <p class="tagline">Desarrollador Web & Móvil</p>
+        </div>
+        <div class="scroll-indicator" id="scroll-prompt">
+            <span style="font-size: 0.6rem; letter-spacing: 0.2em; font-weight: 700; text-transform: uppercase;">Scroll_Portfolio</span>
+        </div>
+    </header>
+
+    <section id="sobre-mi">
+        <div class="container">
+            <div class="section-title">01 // SOBRE_MI</div>
+            <div class="dashboard">
+                <div class="tile tile-profile animate-scroll">
+                    <div class="photo-container">
+                        <img src="images/me.png" alt="William Gutierrez">
+                    </div>
+                </div>
+                <div class="tile tile-about animate-scroll">
+                    <h3 style="font-family: 'Unbounded'; font-size: 0.8rem; margin-bottom: 1.5rem; opacity: 0.5;">PERFIL_BIO</h3>
+                    <p style="color: var(--text-dim); line-height: 1.8; font-size: 1.05rem;">
+                        Arquitecto de soluciones Full-Stack con más de 3 años transformando ideas complejas en productos digitales de alto rendimiento. Mi enfoque no solo es escribir código, sino diseñar experiencias móviles y web escalables que generen impacto real. Potencio el ciclo de desarrollo mediante la integración estratégica de IA, logrando entregas más rápidas y arquitecturas más robustas. Mi meta es clara: convertir desafíos técnicos en ventajas competitivas.
+                    </p>
+                    <div style="display: flex; gap: 40px; margin-top: 2rem;">
+                        <div><span style="display:block; font-size: 1.8rem; font-weight: 800; color: var(--primary);">+3Y</span><small>EXPERIENCIA</small></div>
+                        <div><span style="display:block; font-size: 1.8rem; font-weight: 800; color: var(--primary);">12</span><small>APPS</small></div>
+                    </div>
+                </div>
+                <div class="tile tile-skills animate-scroll">
+                    <h3 style="font-family: 'Unbounded'; font-size: 0.8rem; margin-bottom: 1.5rem; opacity: 0.5;">STACK_TECH</h3>
+                    <div class="tech-stack">
+                       <div class="tech-item"><i class="fab fa-apple"></i> Swift / SwiftUI</div>
+                        <div class="tech-item"><i class="fas fa-code"></i> Kotlin / Android</div>
+                        <div class="tech-item"><i class="fab fa-react"></i> React & React Native</div>
+                        <div class="tech-item"><i class="fab fa-js"></i> JavaScript / JS</div>
+                        <div class="tech-item"><i class="fas fa-terminal"></i> C# / .NET</div>
+
+                        <div class="tech-item"><i class="fab fa-laravel"></i> Laravel Ops</div>
+                        <div class="tech-item"><i class="fas fa-cubes"></i> Odoo ERP</div>
+                        <div class="tech-item"><i class="fas fa-brain"></i> AI Integration</div>
+                    </div>
+                </div>
+                <div class="tile animate-scroll">
+                    <h3 style="font-family: 'Unbounded'; font-size: 0.7rem; opacity: 0.5;">UBICACIÓN</h3>
+                    <div class="location-wrapper">
+                        <span class="fi fi-sv"></span>
+                        <p style="font-weight: 800; font-size: 0.95rem;">San Salvador, SV</p>
+                    </div>
+                </div>
+                <div class="tile animate-scroll">
+                    <h3 style="font-family: 'Unbounded'; font-size: 0.7rem; opacity: 0.5;">RESUME / CV</h3>
+                    <div class="cv-container">
+                        <a href="assets/cvWilliamGutierrez.pdf" download class="btn-cv">
+                            <span>ESPAÑOL</span> <i class="fas fa-download"></i>
+                        </a>
+                        <a href="assets/cvWilliamGutierrezEn.pdf" download class="btn-cv">
+                            <span>ENGLISH</span> <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section id="projects" data-aos="fade-up">
-      <h2>Proyectos</h2>
-      <div class="accordion" id="accordionProjects">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-              App de Salón de Belleza
-            </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionProjects">
-            <div class="accordion-body">
-              <div id="carouselOne" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="images/1.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/2.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/3.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/4.jpeg" class="d-block"></div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselOne" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselOne" data-bs-slide="next">
-                  <span class="carousel-control-next-icon"></span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+    <section id="proyectos">
+        <div class="container">
+            <div class="section-title">02 // PROYECTOS_RECIENTES</div>
 
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-              App de Dentista
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionProjects">
-            <div class="accordion-body">
-              <div id="carouselTwo" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="images/5.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/6.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/7.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/8.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/9.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/10.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/11.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/12.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/13.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/14.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/15.jpeg" class="d-block"></div>
+            <div class="project-card animate-scroll" id="project-1">
+                <div class="project-info">
+                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">PROJECT_01</span>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">Muravi</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Arquitectura retail nativa para el manejo de inventario de stock y ventas.</p>
+                    <button class="btn-open" onclick="launchProject('project-1', 'muravi')">Ver Detalles</button>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselTwo" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselTwo" data-bs-slide="next">
-                  <span class="carousel-control-next-icon"></span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-              App para tienda de Ropa Muravi
-            </button>
-          </h2>
-          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionProjects">
-            <div class="accordion-body">
-              <div id="carouselThree" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active"><img src="images/16.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/17.jpeg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/18.jpg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/19.jpg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/20.jpg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/21.jpg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/22.jpg" class="d-block"></div>
-                  <div class="carousel-item"><img src="images/23.jpg" class="d-block"></div>
+                <div class="project-visual">
+                    <div class="phone-mockup"><img src="images/20.jpg" alt="Muravi"></div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselThree" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselThree" data-bs-slide="next">
-                  <span class="carousel-control-next-icon"></span>
-                </button>
-              </div>
             </div>
-          </div>
-        </div>
+            <div class="project-card animate-scroll" id="project-2">
+                <div class="project-info">
+                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">CASE_STUDY_01</span>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">App Salon</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Aplicacion movil nativa android para hacer citas en un salon de belleza.</p>
+                    <button class="btn-open" onclick="launchProject('project-2', 'salon')">Ver Detalles</button>
+                </div>
+                <div class="project-visual">
+                    <div class="phone-mockup"><img src="images/4.jpeg" alt="POS"></div>
+                </div>
+            </div>
 
-      </div>
+            <div class="project-card animate-scroll" id="project-3">
+                <div class="project-info">
+                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">CASE_STUDY_02</span>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">App Dentista</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Aplicacion movil nativa android para gestionar citas en un consultorio dental. Tambien incluye un sistema de notificaciones y recordatorios, ademas de dar consejos de higiene bucal.</p>
+                    <button class="btn-open" onclick="launchProject('project-3', 'dentist')">Ver Detalles</button>
+                </div>
+                <div class="project-visual">
+                    <div class="phone-mockup"><img src="images/11.jpeg" alt="POS"></div>
+                </div>
+            </div>
+            <div class="project-card animate-scroll" id="project-4">
+                <div class="project-info">
+                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">PROJECT_02</span>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">Landing Page para Privatika</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Pagina Web Landing de alto rendimiento con optimización SEO para aplicacion Privatika.</p>
+                    <button class="btn-open" onclick="launchProject('project-4', 'privatikaL')">Ver Detalles</button>
+                </div>
+                <div class="project-visual">
+                    <div class="desktop-mockup"><img src="images/24.jpg" alt="privatikaLanding"></div>
+                </div>
+            </div>
+
+            <div class="project-card animate-scroll" id="project-5">
+                <div class="project-info">
+                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">WEB_SYSTEM_01</span>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">App Privatika</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Aplicacion web para la gestion de terminos y condiciones de paginas web.</p>
+                    <button class="btn-open" onclick="launchProject('project-5', 'privatika')">Ver Detalles</button>
+                </div>
+                <div class="project-visual">
+                    <div class="desktop-mockup"><img src="images/30.jpg" alt="Privatika"></div>
+                </div>
+            </div>
+
+            <div class="project-card animate-scroll" id="project-6">
+                <div class="project-info">
+                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">WEB_SYSTEM_02</span>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">Skyfleeter App(Funciones varias)</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Crear, gestionar y actualizar funciones dentro de aplicacion web Skyfleeter.</p>
+                    <button class="btn-open" onclick="launchProject('project-6', 'skyfleeter')">Ver Detalles</button>
+                </div>
+                <div class="project-visual">
+                    <div class="desktop-mockup"><img src="images/34.jpg" alt="Skyfleeter"></div>
+                </div>
+            </div>
+
+        </div>
     </section>
 
-    <section id="contact" data-aos="fade-up">
-      <h2>Contacto</h2>
-      <form action="https://formspree.io/f/mjvjjloy" method="POST" class="mx-auto" style="max-width: 600px;">
-        <div class="mb-3">
-          <label class="form-label">Nombre</label>
-          <input type="text" name="name" class="form-control" required>
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/ObedGut"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://www.linkedin.com/in/william-obed-gutierrez-flores-46ba2421a/"><i class="fab fa-linkedin"></i> LinkedIn</a>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" name="email" class="form-control" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Mensaje</label>
-          <textarea name="message" class="form-control" rows="4" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-      </form>
-    </section>
-  </main>
+        <p>&copy; 2026 William Gutierrez. <span style="color: var(--primary);">Construido con pasión y código nativo.</span></p>
+    </footer>
 
-  <footer>
-    <p>&copy; William Gutierrez 2025</p>
-  </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>AOS.init({ once: true });</script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        function launchProject(cardId, projectKey) {
+            const card = document.getElementById(cardId);
+            const overlay = document.getElementById('page-transition');
+
+            gsap.to(card, {
+                scale: 1.05,
+                boxShadow: "0 0 100px rgba(0, 242, 255, 0.4)",
+                duration: 0.4,
+                ease: "power2.out"
+            });
+
+            overlay.style.display = 'block';
+            gsap.to(overlay, {
+                opacity: 1,
+                duration: 0.6,
+                delay: 0.2,
+                onComplete: () => {
+                    window.location.href = `proyecto.html?id=${projectKey}`;
+                }
+            });
+        }
+
+        VanillaTilt.init(document.querySelectorAll(".tile, .phone-mockup, .desktop-mockup"), {
+            max: 5, speed: 400, glare: true, "max-glare": 0.1,
+        });
+
+        gsap.to(".word-reveal", {
+            opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+            stagger: 0.2, duration: 1.2, ease: "back.out(1.7)", delay: 0.3
+        });
+
+        document.getElementById('scroll-prompt').addEventListener('click', () => {
+            document.getElementById('sobre-mi').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        document.querySelectorAll('.animate-scroll').forEach(el => {
+            gsap.fromTo(el, { opacity: 0, y: 30 }, { 
+                opacity: 1, y: 0, duration: 0.8, ease: "power2.out",
+                scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" }
+            });
+        });
+
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 120 + 40;
+                this.color = Math.random() > 0.5 ? '#00f2ff' : '#7000ff';
+                this.speedX = Math.random() * 0.3 - 0.15;
+                this.speedY = Math.random() * 0.3 - 0.15;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = this.color; ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+        for (let i = 0; i < 8; i++) particles.push(new Particle());
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
