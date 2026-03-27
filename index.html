@@ -49,6 +49,17 @@
 
         .container { max-width: 1200px; margin: 0 auto; width: 100%; }
 
+        /* --- LANGUAGE SELECTOR (DISEÑO UNIFICADO) --- */
+        .language-selector { position: fixed; bottom: 30px; right: 30px; z-index: 10000; }
+        #lang-btn {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border); padding: 12px 20px;
+            border-radius: 50px; color: white; font-family: 'Unbounded';
+            font-size: 0.7rem; display: flex; align-items: center; gap: 10px;
+            cursor: pointer; transition: 0.3s;
+        }
+        #lang-btn:hover { border-color: var(--primary); background: rgba(0, 242, 255, 0.1); transform: translateY(-2px); }
+
         /* --- HERO --- */
         .name-wrapper {
             font-family: 'Unbounded', sans-serif;
@@ -155,8 +166,8 @@
         /* FOOTER */
         footer { padding: 4rem 10%; border-top: 1px solid var(--card-border); color: var(--text-dim); font-size: 0.75rem; text-align: center; }
         .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 1rem; }
-        .footer-links a { color: var(--text-dim); text-decoration: none; transition: 0.3s; }
-        .footer-links a:hover { color: var(--primary); }
+        .footer-links a { color: var(--text-dim); text-decoration: none; transition: 0.3s; font-size: 1.2rem; }
+        .footer-links a:hover { color: var(--primary); transform: translateY(-3px); }
 
         @media (max-width: 1100px) {
             section, header { padding: 5rem 5%; height: auto; min-height: 100vh; scroll-snap-align: none; }
@@ -172,13 +183,20 @@
     <div id="page-transition"></div>
     <canvas id="bg-canvas"></canvas>
 
+    <div class="language-selector">
+        <button id="lang-btn" onclick="toggleLanguage()">
+            <span class="fi fi-us" id="lang-flag"></span>
+            <span id="lang-text">ENGLISH</span>
+        </button>
+    </div>
+
     <header>
         <div class="container">
             <h1 class="name-wrapper">
                 <span class="word-reveal">WILLIAM</span><br>
                 <span class="word-reveal">GUTIERREZ</span>
             </h1>
-            <p class="tagline">Desarrollador Web & Móvil</p>
+            <p class="tagline" data-es="Desarrollador Web & Móvil" data-en="Web & Mobile Developer">Desarrollador Web & Móvil</p>
         </div>
         <div class="scroll-indicator" id="scroll-prompt">
             <span style="font-size: 0.6rem; letter-spacing: 0.2em; font-weight: 700; text-transform: uppercase;">Scroll_Portfolio</span>
@@ -187,7 +205,7 @@
 
     <section id="sobre-mi">
         <div class="container">
-            <div class="section-title">01 // SOBRE_MI</div>
+            <div class="section-title" data-es="01 // SOBRE_MI" data-en="01 // ABOUT_ME">01 // SOBRE_MI</div>
             <div class="dashboard">
                 <div class="tile tile-profile animate-scroll">
                     <div class="photo-container">
@@ -196,12 +214,12 @@
                 </div>
                 <div class="tile tile-about animate-scroll">
                     <h3 style="font-family: 'Unbounded'; font-size: 0.8rem; margin-bottom: 1.5rem; opacity: 0.5;">PERFIL_BIO</h3>
-                    <p style="color: var(--text-dim); line-height: 1.8; font-size: 1.05rem;">
+                    <p style="color: var(--text-dim); line-height: 1.8; font-size: 1.05rem;" data-es="Arquitecto de soluciones Full-Stack con más de 3 años transformando ideas complejas en productos digitales de alto rendimiento. Mi enfoque no solo es escribir código, sino diseñar experiencias móviles y web escalables que generen impacto real. Potencio el ciclo de desarrollo mediante la integración estratégica de IA, logrando entregas más rápidas y arquitecturas más robustas. Mi meta es clara: convertir desafíos técnicos en ventajas competitivas." data-en="Full-Stack solutions architect with over 3 years transforming complex ideas into high-performance digital products. My focus isn't just writing code, but designing scalable mobile and web experiences that create real impact. I empower the development cycle through strategic AI integration, achieving faster deliveries and more robust architectures. My goal is clear: turning technical challenges into competitive advantages.">
                         Arquitecto de soluciones Full-Stack con más de 3 años transformando ideas complejas en productos digitales de alto rendimiento. Mi enfoque no solo es escribir código, sino diseñar experiencias móviles y web escalables que generen impacto real. Potencio el ciclo de desarrollo mediante la integración estratégica de IA, logrando entregas más rápidas y arquitecturas más robustas. Mi meta es clara: convertir desafíos técnicos en ventajas competitivas.
                     </p>
                     <div style="display: flex; gap: 40px; margin-top: 2rem;">
-                        <div><span style="display:block; font-size: 1.8rem; font-weight: 800; color: var(--primary);">+3Y</span><small>EXPERIENCIA</small></div>
-                        <div><span style="display:block; font-size: 1.8rem; font-weight: 800; color: var(--primary);">12</span><small>APPS</small></div>
+                        <div><span style="display:block; font-size: 1.8rem; font-weight: 800; color: var(--primary);">+3Y</span><small data-es="EXPERIENCIA" data-en="EXPERIENCE">EXPERIENCIA</small></div>
+                        <div><span style="display:block; font-size: 1.8rem; font-weight: 800; color: var(--primary);">12</span><small data-es="APPS" data-en="APPS">APPS</small></div>
                     </div>
                 </div>
                 <div class="tile tile-skills animate-scroll">
@@ -212,14 +230,13 @@
                         <div class="tech-item"><i class="fab fa-react"></i> React & React Native</div>
                         <div class="tech-item"><i class="fab fa-js"></i> JavaScript / JS</div>
                         <div class="tech-item"><i class="fas fa-terminal"></i> C# / .NET</div>
-
                         <div class="tech-item"><i class="fab fa-laravel"></i> Laravel Ops</div>
                         <div class="tech-item"><i class="fas fa-cubes"></i> Odoo ERP</div>
                         <div class="tech-item"><i class="fas fa-brain"></i> AI Integration</div>
                     </div>
                 </div>
                 <div class="tile animate-scroll">
-                    <h3 style="font-family: 'Unbounded'; font-size: 0.7rem; opacity: 0.5;">UBICACIÓN</h3>
+                    <h3 style="font-family: 'Unbounded'; font-size: 0.7rem; opacity: 0.5;" data-es="UBICACIÓN" data-en="LOCATION">UBICACIÓN</h3>
                     <div class="location-wrapper">
                         <span class="fi fi-sv"></span>
                         <p style="font-weight: 800; font-size: 0.95rem;">San Salvador, SV</p>
@@ -228,11 +245,11 @@
                 <div class="tile animate-scroll">
                     <h3 style="font-family: 'Unbounded'; font-size: 0.7rem; opacity: 0.5;">RESUME / CV</h3>
                     <div class="cv-container">
-                        <a href="assets/cvWilliamGutierrez.pdf" download class="btn-cv">
-                            <span>ESPAÑOL</span> <i class="fas fa-download"></i>
+                        <a href="assets/cvWilliamGutierrez26.pdf" download class="btn-cv">
+                            <span data-es="ESPAÑOL" data-en="SPANISH">ESPAÑOL</span> <i class="fas fa-download"></i>
                         </a>
-                        <a href="assets/cvWilliamGutierrezEn.pdf" download class="btn-cv">
-                            <span>ENGLISH</span> <i class="fas fa-download"></i>
+                        <a href="assets/cvWilliamGutierrez26EN.pdf" download class="btn-cv">
+                            <span data-es="INGLÉS" data-en="ENGLISH">ENGLISH</span> <i class="fas fa-download"></i>
                         </a>
                     </div>
                 </div>
@@ -242,48 +259,14 @@
 
     <section id="proyectos">
         <div class="container">
-            <div class="section-title">02 // PROYECTOS_RECIENTES</div>
+            <div class="section-title" data-es="02 // PROYECTOS_RECIENTES" data-en="02 // RECENT_PROJECTS">02 // PROYECTOS_RECIENTES</div>
 
-            <div class="project-card animate-scroll" id="project-1">
-                <div class="project-info">
-                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">PROJECT_01</span>
-                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">Muravi</h2>
-                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Arquitectura retail nativa para el manejo de inventario de stock y ventas.</p>
-                    <button class="btn-open" onclick="launchProject('project-1', 'muravi')">Ver Detalles</button>
-                </div>
-                <div class="project-visual">
-                    <div class="phone-mockup"><img src="images/20.jpg" alt="Muravi"></div>
-                </div>
-            </div>
-            <div class="project-card animate-scroll" id="project-2">
-                <div class="project-info">
-                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">CASE_STUDY_01</span>
-                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">App Salon</h2>
-                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Aplicacion movil nativa android para hacer citas en un salon de belleza.</p>
-                    <button class="btn-open" onclick="launchProject('project-2', 'salon')">Ver Detalles</button>
-                </div>
-                <div class="project-visual">
-                    <div class="phone-mockup"><img src="images/4.jpeg" alt="POS"></div>
-                </div>
-            </div>
-
-            <div class="project-card animate-scroll" id="project-3">
-                <div class="project-info">
-                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">CASE_STUDY_02</span>
-                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">App Dentista</h2>
-                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Aplicacion movil nativa android para gestionar citas en un consultorio dental. Tambien incluye un sistema de notificaciones y recordatorios, ademas de dar consejos de higiene bucal.</p>
-                    <button class="btn-open" onclick="launchProject('project-3', 'dentist')">Ver Detalles</button>
-                </div>
-                <div class="project-visual">
-                    <div class="phone-mockup"><img src="images/11.jpeg" alt="POS"></div>
-                </div>
-            </div>
             <div class="project-card animate-scroll" id="project-4">
                 <div class="project-info">
-                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">PROJECT_02</span>
-                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">Landing Page para Privatika</h2>
-                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Pagina Web Landing de alto rendimiento con optimización SEO para aplicacion Privatika.</p>
-                    <button class="btn-open" onclick="launchProject('project-4', 'privatikaL')">Ver Detalles</button>
+                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">PROJECT_04</span>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;" data-es="Landing Page para Privatika" data-en="Landing Page for Privatika">Landing Page para Privatika</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;" data-es="Pagina Web Landing de alto rendimiento con optimización SEO para aplicacion Privatika." data-en="High-performance Landing Page with SEO optimization for Privatika application.">Pagina Web Landing de alto rendimiento con optimización SEO para aplicacion Privatika.</p>
+                    <button class="btn-open" onclick="launchProject('project-4', 'privatikaL')" data-es="Ver Detalles" data-en="View Details">Ver Detalles</button>
                 </div>
                 <div class="project-visual">
                     <div class="desktop-mockup"><img src="images/24.jpg" alt="privatikaLanding"></div>
@@ -293,9 +276,9 @@
             <div class="project-card animate-scroll" id="project-5">
                 <div class="project-info">
                     <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">WEB_SYSTEM_01</span>
-                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">App Privatika</h2>
-                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Aplicacion web para la gestion de terminos y condiciones de paginas web.</p>
-                    <button class="btn-open" onclick="launchProject('project-5', 'privatika')">Ver Detalles</button>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;" data-es="App Privatika" data-en="Privatika App">App Privatika</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;" data-es="Aplicacion web para la gestion de terminos y condiciones de paginas web." data-en="Web application for managing website terms and conditions.">Aplicacion web para la gestion de terminos y condiciones de paginas web.</p>
+                    <button class="btn-open" onclick="launchProject('project-5', 'privatika')" data-es="Ver Detalles" data-en="View Details">Ver Detalles</button>
                 </div>
                 <div class="project-visual">
                     <div class="desktop-mockup"><img src="images/30.jpg" alt="Privatika"></div>
@@ -305,12 +288,48 @@
             <div class="project-card animate-scroll" id="project-6">
                 <div class="project-info">
                     <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">WEB_SYSTEM_02</span>
-                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;">Skyfleeter App(Funciones varias)</h2>
-                    <p style="color: var(--text-dim); margin-bottom: 1rem;">Crear, gestionar y actualizar funciones dentro de aplicacion web Skyfleeter.</p>
-                    <button class="btn-open" onclick="launchProject('project-6', 'skyfleeter')">Ver Detalles</button>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;" data-es="Skyfleeter App" data-en="Skyfleeter App">Skyfleeter App</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;" data-es="Crear, gestionar y actualizar funciones dentro de aplicacion web Skyfleeter." data-en="Create, manage, and update functions within the Skyfleeter web application.">Crear, gestionar y actualizar funciones dentro de aplicacion web Skyfleeter.</p>
+                    <button class="btn-open" onclick="launchProject('project-6', 'skyfleeter')" data-es="Ver Detalles" data-en="View Details">Ver Detalles</button>
                 </div>
                 <div class="project-visual">
                     <div class="desktop-mockup"><img src="images/34.jpg" alt="Skyfleeter"></div>
+                </div>
+            </div>
+
+            <div class="project-card animate-scroll" id="project-1">
+                <div class="project-info">
+                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">PROJECT_01</span>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;" data-es="Muravi" data-en="Muravi">Muravi</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;" data-es="Arquitectura retail nativa para el manejo de inventario de stock y ventas." data-en="Native retail architecture for stock inventory and sales management.">Arquitectura retail nativa para el manejo de inventario de stock y ventas.</p>
+                    <button class="btn-open" onclick="launchProject('project-1', 'muravi')" data-es="Ver Detalles" data-en="View Details">Ver Detalles</button>
+                </div>
+                <div class="project-visual">
+                    <div class="phone-mockup"><img src="images/20.jpg" alt="Muravi"></div>
+                </div>
+            </div>
+
+            <div class="project-card animate-scroll" id="project-2">
+                <div class="project-info">
+                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">CASE_STUDY_01</span>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;" data-es="App Salon" data-en="Salon App">App Salon</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;" data-es="Aplicacion movil nativa android para hacer citas en un salon de belleza." data-en="Native Android mobile app for booking appointments in a beauty salon.">Aplicacion movil nativa android para hacer citas en un salon de belleza.</p>
+                    <button class="btn-open" onclick="launchProject('project-2', 'salon')" data-es="Ver Detalles" data-en="View Details">Ver Detalles</button>
+                </div>
+                <div class="project-visual">
+                    <div class="phone-mockup"><img src="images/4.jpeg" alt="POS"></div>
+                </div>
+            </div>
+
+            <div class="project-card animate-scroll" id="project-3">
+                <div class="project-info">
+                    <span style="color: var(--primary); font-weight: 800; font-size: 0.7rem; letter-spacing: 3px;">CASE_STUDY_02</span>
+                    <h2 style="font-family: 'Unbounded'; font-size: 2.5rem; margin: 1rem 0;" data-es="App Dentista" data-en="Dentist App">App Dentista</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 1rem;" data-es="Aplicacion movil nativa android para gestionar citas en un consultorio dental." data-en="Native Android mobile app to manage appointments in a dental office.">Aplicacion movil nativa android para gestionar citas en un consultorio dental.</p>
+                    <button class="btn-open" onclick="launchProject('project-3', 'dentist')" data-es="Ver Detalles" data-en="View Details">Ver Detalles</button>
+                </div>
+                <div class="project-visual">
+                    <div class="phone-mockup"><img src="images/11.jpeg" alt="POS"></div>
                 </div>
             </div>
 
@@ -319,10 +338,10 @@
 
     <footer>
         <div class="footer-links">
-            <a href="https://github.com/ObedGut"><i class="fab fa-github"></i> GitHub</a>
-            <a href="https://www.linkedin.com/in/william-obed-gutierrez-flores-46ba2421a/"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://github.com/ObedGut" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/william-obed-gutierrez-flores-46ba2421a/" target="_blank"><i class="fab fa-linkedin"></i></a>
         </div>
-        <p>&copy; 2026 William Gutierrez. <span style="color: var(--primary);">Construido con pasión y código nativo.</span></p>
+        <p>&copy; 2026 William Gutierrez. <span style="color: var(--primary);" data-es="Construido con pasión y código nativo." data-en="Built with passion and native code.">Construido con pasión y código nativo.</span></p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -332,41 +351,106 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        function launchProject(cardId, projectKey) {
-            const card = document.getElementById(cardId);
-            const overlay = document.getElementById('page-transition');
+        // --- FUNCIONALIDAD DE IDIOMAS CON PERSISTENCIA EN URL ---
+        let currentLang = 'es';
 
-            gsap.to(card, {
-                scale: 1.05,
-                boxShadow: "0 0 100px rgba(0, 242, 255, 0.4)",
-                duration: 0.4,
-                ease: "power2.out"
+        // Al cargar la página, revisamos si ya existe un idioma en la URL
+        window.onload = () => {
+    // 1. Manejo de Idioma (lo que ya tenías)
+    const urlParams = new URLSearchParams(window.location.search);
+    const langParam = urlParams.get('lang');
+    if (langParam && (langParam === 'es' || langParam === 'en')) {
+        currentLang = langParam === 'es' ? 'en' : 'es'; 
+        toggleLanguage(); 
+    }
+
+    // 2. RECUPERAR SCROLL SI EXISTE
+    const savedScroll = localStorage.getItem('portfolioScrollPos');
+    if (savedScroll) {
+        // Usamos un pequeño delay para que el navegador termine de renderizar el layout
+        setTimeout(() => {
+            window.scrollTo({
+                top: parseInt(savedScroll),
+                behavior: 'instant' // 'instant' para que no se vea el salto al cargar
             });
+            // Limpiamos el storage para que no afecte a una carga nueva después
+            localStorage.removeItem('portfolioScrollPos');
+        }, 100);
+    }
+};
 
-            overlay.style.display = 'block';
-            gsap.to(overlay, {
-                opacity: 1,
-                duration: 0.6,
-                delay: 0.2,
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            const btnText = document.getElementById('lang-text');
+            const btnFlag = document.getElementById('lang-flag');
+            
+            // 1. Actualizar la URL sin recargar la página
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?lang=${currentLang}`;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+
+            // 2. Transición suave de salida para el contenido
+            gsap.to("body", { 
+                opacity: 0, 
+                duration: 0.2, 
                 onComplete: () => {
-                    window.location.href = `proyecto.html?id=${projectKey}`;
-                }
+                    // Cambiar textos y banderas del selector
+                    btnText.innerText = currentLang === 'es' ? 'ENGLISH' : 'ESPAÑOL';
+                    btnFlag.className = currentLang === 'es' ? 'fi fi-us' : 'fi fi-sv';
+
+                    // Traducir todos los elementos
+                    document.querySelectorAll('[data-es]').forEach(el => {
+                        el.innerText = el.getAttribute(`data-${currentLang}`);
+                    });
+
+                    // Transición suave de entrada
+                    gsap.to("body", { opacity: 1, duration: 0.4 });
+                } 
             });
         }
 
-        VanillaTilt.init(document.querySelectorAll(".tile, .phone-mockup, .desktop-mockup"), {
+        // 3. Asegurar que al ir a un proyecto, el idioma vaya en la URL
+        function launchProject(cardId, projectKey) {
+    const card = document.getElementById(cardId);
+    const overlay = document.getElementById('page-transition');
+
+    // --- GUARDAR SCROLL ANTES DE SALIR ---
+    localStorage.setItem('portfolioScrollPos', window.scrollY);
+
+    gsap.to(card, {
+        scale: 1.02,
+        boxShadow: "0 0 100px rgba(0, 242, 255, 0.4)",
+        duration: 0.4,
+        ease: "power2.out"
+    });
+
+    overlay.style.display = 'block';
+    gsap.to(overlay, {
+        opacity: 1,
+        duration: 0.6,
+        delay: 0.2,
+        onComplete: () => {
+            window.location.href = `proyecto.html?id=${projectKey}&lang=${currentLang}`;
+        }
+    });
+}
+
+        // Inicialización de Tilt
+        VanillaTilt.init(document.querySelectorAll(".tile, .phone-mockup, .desktop-mockup, #lang-btn"), {
             max: 5, speed: 400, glare: true, "max-glare": 0.1,
         });
 
+        // Animación de entrada del nombre
         gsap.to(".word-reveal", {
             opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
             stagger: 0.2, duration: 1.2, ease: "back.out(1.7)", delay: 0.3
         });
 
+        // Scroll suave
         document.getElementById('scroll-prompt').addEventListener('click', () => {
             document.getElementById('sobre-mi').scrollIntoView({ behavior: 'smooth' });
         });
         
+        // Animaciones de scroll
         document.querySelectorAll('.animate-scroll').forEach(el => {
             gsap.fromTo(el, { opacity: 0, y: 30 }, { 
                 opacity: 1, y: 0, duration: 0.8, ease: "power2.out",
@@ -374,6 +458,7 @@
             });
         });
 
+        // Lógica del Fondo Animado
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -384,10 +469,10 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 120 + 40;
+                this.size = Math.random() * 150 + 50;
                 this.color = Math.random() > 0.5 ? '#00f2ff' : '#7000ff';
-                this.speedX = Math.random() * 0.3 - 0.15;
-                this.speedY = Math.random() * 0.3 - 0.15;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
             }
             update() {
                 this.x += this.speedX; this.y += this.speedY;
@@ -395,11 +480,12 @@
                 if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
             }
             draw() {
+                ctx.globalAlpha = 0.4;
                 ctx.fillStyle = this.color; ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-        for (let i = 0; i < 8; i++) particles.push(new Particle());
+        for (let i = 0; i < 12; i++) particles.push(new Particle());
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });

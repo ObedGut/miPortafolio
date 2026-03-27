@@ -7,6 +7,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
     
     <style>
         :root {
@@ -47,7 +48,6 @@
         .content-section h2 { font-family: 'Unbounded'; font-size: 0.7rem; color: var(--primary); margin-bottom: 1rem; letter-spacing: 1px; }
         .content-section p { color: var(--text-dim); line-height: 1.8; font-size: 1.1rem; max-width: 90%; }
 
-        /* Estilos de la lista de actividades */
         .activity-list { list-style: none; padding: 0; }
         .activity-item { 
             display: flex; align-items: flex-start; gap: 12px;
@@ -56,50 +56,34 @@
         }
         .activity-item i { color: var(--primary); font-size: 0.8rem; margin-top: 5px; opacity: 0.8; }
 
-        /* VISUALIZADORES */
         .visual-container { display: flex; justify-content: flex-start; align-items: center; width: 100%; position: sticky; top: 5%; }
 
         .phone-frame {
-            width: 320px; height: 650px;
-            background: #000; border: 12px solid #1a1a1a;
-            border-radius: 45px; position: relative;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            width: 320px; height: 650px; background: #000; border: 12px solid #1a1a1a;
+            border-radius: 45px; position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.8);
             overflow: hidden; display: none; margin: 0 auto;
         }
-        .phone-frame::before {
-            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 120px; height: 25px; background: #1a1a1a; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 10;
-        }
-
         .desktop-frame {
-            width: 135%; 
-            aspect-ratio: 16/10;
-            background: #000; border: 12px solid #222;
-            border-radius: 24px; position: relative;
-            box-shadow: 0 80px 150px rgba(0,0,0,0.9), 0 0 50px rgba(0, 242, 255, 0.1);
-            overflow: hidden; display: none;
-            transform: translateX(-8%);
-        }
-        .desktop-frame::before {
-            content: '● ● ●'; color: #444; font-size: 9px; padding-left: 20px;
-            display: flex; align-items: center;
-            height: 35px; background: #222; width: 100%;
+            width: 135%; aspect-ratio: 16/10; background: #000; border: 12px solid #222;
+            border-radius: 24px; position: relative; box-shadow: 0 80px 150px rgba(0,0,0,0.9);
+            overflow: hidden; display: none; transform: translateX(-8%);
         }
 
-        .screen-carousel {
-            width: 100%; height: 100%; position: relative;
-            display: flex; transition: transform 0.8s cubic-bezier(0.2, 1, 0.2, 1);
-        }
-        .screen-carousel img { 
-            width: 100%; height: 100%; 
-            object-fit: contain; 
-            background-color: #000;
-            flex-shrink: 0; 
-        }
+        .screen-carousel { width: 100%; height: 100%; position: relative; display: flex; transition: transform 0.8s cubic-bezier(0.2, 1, 0.2, 1); }
+        .screen-carousel img { width: 100%; height: 100%; object-fit: contain; background-color: #000; flex-shrink: 0; }
 
         .touch-area { position: absolute; top: 0; width: 30%; height: 100%; z-index: 5; cursor: pointer; }
         .touch-left { left: 0; }
         .touch-right { right: 0; }
+
+        .language-selector { position: fixed; bottom: 30px; right: 30px; z-index: 10000; }
+        #lang-btn {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border); padding: 12px 20px;
+            border-radius: 50px; color: white; font-family: 'Unbounded';
+            font-size: 0.7rem; display: flex; align-items: center; gap: 10px;
+            cursor: pointer; transition: 0.3s;
+        }
 
         @media (max-width: 1300px) {
             .desktop-frame { width: 100%; transform: none; }
@@ -112,28 +96,34 @@
 
     <canvas id="bg-canvas"></canvas>
 
+    <div class="language-selector">
+        <button id="lang-btn" onclick="toggleLanguage()">
+            <span class="fi fi-us" id="lang-flag"></span>
+            <span id="lang-text">ENGLISH</span>
+        </button>
+    </div>
+
     <div class="container">
-        <a href="javascript:void(0);" onclick="window.history.back();" class="btn-back">
-            <i class="fas fa-arrow-left"></i> Volver a portafolio
+        <a href="index.html" class="btn-back" id="back-to-index">
+            <i class="fas fa-arrow-left"></i> <span data-key="back">Volver a portafolio</span>
         </a>
 
         <div class="project-grid">
             <div class="info-col">
                 <header class="project-header">
                     <h1 id="p-title">-</h1>
-                    <div class="meta-item"><span>TECNOLOGÍAS</span><p id="p-stack">-</p></div>
-                    <div class="meta-item"><span>MI ROL</span><p id="p-role">-</p></div>
+                    <div class="meta-item"><span data-key="label_tech">TECNOLOGÍAS</span><p id="p-stack">-</p></div>
+                    <div class="meta-item"><span data-key="label_role">MI ROL</span><p id="p-role">-</p></div>
                 </header>
 
                 <section class="content-section">
-                    <h2>LOGIC_CORE</h2>
+                    <h2 data-key="label_logic">LÓGICA_CORE</h2>
                     <p id="p-desc">-</p>
                 </section>
 
                 <section class="content-section">
-                    <h2>KEY_CONTRIBUTIONS</h2>
-                    <ul class="activity-list" id="p-activities">
-                        </ul>
+                    <h2 data-key="label_contrib">CONTRIBUCIONES_CLAVE</h2>
+                    <ul class="activity-list" id="p-activities"></ul>
                 </section>
             </div>
 
@@ -156,119 +146,145 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script>
         const projectsData = {
-            "muravi": {
-                title: "Muravi",
-                stack: "Kotlin / Firebase",
-                role: "Desarrollador Android",
-                desc: "Desarrollé una arquitectura robusta que permite el seguimiento en tiempo real de existencias por talla, color y temporada, integrando un módulo de ventas dinámico que genera reportes de rentabilidad automáticos.",
-                isMobile: true,
-                activities: [
-                    "Diseño de arquitectura MVVM escalable.",
-                    "Integración Firebase para control de stock.",
-                    "Integración de seguridad por biometria.",
-                    "Testing automatizado de componentes críticos.",
-                    "Creación de CRUD para agregar prendas, o registrar ventas para generar reportes."
-                ],
-                images: ["images/16.jpeg", "images/17.jpeg", "images/18.jpg", "images/19.jpg", "images/20.jpg", "images/21.jpg", "images/22.jpg", "images/23.jpg"]
+            es: {
+                "muravi": {
+                    title: "Muravi", stack: "Kotlin / Firebase", role: "Desarrollador Android",
+                    desc: "Desarrollé una arquitectura robusta que permite el seguimiento en tiempo real de existencias por talla, color y temporada, integrando un módulo de ventas dinámico que genera reportes de rentabilidad automáticos.",
+                    isMobile: true,
+                    activities: ["Diseño de arquitectura MVVM escalable.", "Integración Firebase para control de stock.", "Integración de seguridad por biometria.", "Testing automatizado de componentes críticos.", "Creación de CRUD para agregar prendas, o registrar ventas para generar reportes."],
+                    images: ["images/16.jpeg", "images/17.jpeg", "images/18.jpg", "images/19.jpg", "images/20.jpg", "images/21.jpg", "images/22.jpg", "images/23.jpg"]
+                },
+                "salon": {
+                    title: "App Salon", stack: "Java / Firebase", role: "Desarrollador Android",
+                    desc: "Desarrollé una aplicación móvil para la gestión de servicios de un salón de belleza, integrando un sistema de reservas en tiempo real y notificaciones push.",
+                    isMobile: true,
+                    activities: ["Diseño de arquitectura MVVM escalable.", "Integración Firebase para control de citas.", "Creación de CRUD para control de las citas."],
+                    images: ["images/1.jpeg", "images/2.jpeg", "images/3.jpeg", "images/4.jpeg"]
+                },
+                "dentist": {
+                    title: "App Dentista", stack: "Java / Firebase", role: "Desarrollador Android",
+                    desc: "Desarrollé una Aplicacion movil nativa android para gestionar citas en un consultorio dental. Tambien incluye un sistema de notificaciones y recordatorios, ademas de dar consejos de higiene bucal..",
+                    isMobile: true,
+                    activities: ["Diseño de arquitectura MVVM escalable.", "Integración Firebase para control de citas.", "Testing automatizado de componentes críticos.", "Creación de CRUD para agregar citas", "Intregacion de notificaciones push para recordatorios de citas y consejos de higiene bucal."],
+                    images: ["images/5.jpeg", "images/6.jpeg", "images/7.jpeg", "images/8.jpeg", "images/9.jpeg", "images/10.jpeg", "images/11.jpeg", "images/12.jpeg", "images/13.jpeg", "images/14.jpeg", "images/15.jpeg"]
+                },
+                "privatikaL": {
+                    title: "Privatika Landing", stack: "vite.js / Tailwind CSS", role: "Desarrollador Frontend",
+                    desc: "Desarrollé una landing page de alto rendimiento para Privatika, optimizada para SEO, utilizando Vite.js y Tailwind CSS para una experiencia de usuario fluida y atractiva.",
+                    isMobile: false,
+                    activities: ["Desarrollo de componentes UI reutilizables.", "Optimización de SEO y Core Web Vitals.", "Implementación de animaciones fluidas.", "Consumir API REST para el envio de mails."],
+                    images: ["images/24.jpg", "images/25.jpg", "images/26.jpg", "images/27.jpg", "images/28.jpg", "images/29.jpg"]
+                },
+                "privatika": {
+                    title: "Privatika App", stack: "vite.js / Tailwind CSS", role: "Desarrollador Frontend",
+                    desc: "Desarrollé un panel administrativo robusto para gestión de Terminos y Condiciones de paginas web. Estuve encargado del Frontend de dicho dashboard.",
+                    isMobile: false,
+                    activities: ["Desarrollo de Dashboard interactivo.", "Gestión de estados globales complejos.", "Implementación de sistema de roles y permisos.", "Consumir API REST para funcionalidades como creacion de usuarios, creacion de terminos y condiciones y generacion de keys para conectar apps o paginas web."],
+                    images: ["images/30.jpg", "images/31.jpg", "images/32.jpg", "images/33.jpg"]
+                },
+                "skyfleeter": {
+                    title: "Skyfleeter", stack: ".NET / C# / SQL", role: "Desarrollador Full Stack",
+                    desc: "Solución empresarial para monitoreo de flotas avanzada. Desarrollé varias actividades dentro de la aplicación web, detalladas abajo. Por motivos de confidencialidad las capturas de pantalla no estan disponibles, pero se pueden mostrar en una entrevista técnica.",
+                    isMobile: false,
+                    activities: ["Espacio para crear tickets de reportes para soporte técnico.", "Generacion de QR de codigos de equipos y su respectivo QR para su inspección.", "Generación de PDFs con dichos codigos QR.", "Implementación de sistema de notificaciones via mail para cuando los vehiculos necesiten mantenimiento o inspeccion.", "Sistema de ingreso de documentación de conductores.", "App movil para rastreo de viajes realizados por la flota, con geolocalización en tiempo real, control de viajes por conductor y control de rutas."],
+                    images: ["images/34.jpg"]
+                }
             },
-            "salon": {
-                title: "App Salon",
-                stack: "Java / Firebase",
-                role: "Desarrollador Android",
-                desc: "Desarrollé una aplicación móvil para la gestión de servicios de un salón de belleza, integrando un sistema de reservas en tiempo real y notificaciones push.",
-                isMobile: true,
-                activities: [
-                    "Diseño de arquitectura MVVM escalable.",
-                    "Integración Firebase para control de citas.",
-                    "Creación de CRUD para control de las citas."
-                ],
-                images: ["images/1.jpeg", "images/2.jpeg", "images/3.jpeg", "images/4.jpeg",]
-            },
-            "dentist": {
-                title: "App Dentista",
-                stack: "Java / Firebase",
-                role: "Desarrollador Android",
-                desc: "Desarrollé una Aplicacion movil nativa android para gestionar citas en un consultorio dental. Tambien incluye un sistema de notificaciones y recordatorios, ademas de dar consejos de higiene bucal..",
-                isMobile: true,
-                activities: [
-                    "Diseño de arquitectura MVVM escalable.",
-                    "Integración Firebase para control de citas.",
-                    "Testing automatizado de componentes críticos.",
-                    "Creación de CRUD para agregar citas",
-                    "Intregacion de notificaciones push para recordatorios de citas y consejos de higiene bucal."
-                ],
-                images: ["images/5.jpeg", "images/6.jpeg", "images/7.jpeg", "images/8.jpeg", "images/9.jpeg", "images/10.jpeg", "images/11.jpeg", "images/12.jpeg", "images/13.jpeg", "images/14.jpeg", "images/15.jpeg"]
-            },
-            "privatikaL": {
-                title: "Privatika Landing",
-                stack: "vite.js / Tailwind CSS",
-                role: "Desarrollador Frontend",
-                desc: "Desarrollé una landing page de alto rendimiento para Privatika, optimizada para SEO, utilizando Vite.js y Tailwind CSS para una experiencia de usuario fluida y atractiva.",
-                isMobile: false,
-                activities: [
-                    "Desarrollo de componentes UI reutilizables.",
-                    "Optimización de SEO y Core Web Vitals.",
-                    "Implementación de animaciones fluidas.",
-                    "Consumir API REST para el envio de mails."
-                ],
-                images: ["images/24.jpg", "images/25.jpg", "images/26.jpg", "images/27.jpg", "images/28.jpg", "images/29.jpg"]
-            },
-            "privatika": {
-                title: "Privatika App",
-                stack: "vite.js / Tailwind CSS",
-                role: "Desarrollador Frontend",
-                desc: "Desarrollé un panel administrativo robusto para gestión de Terminos y Condiciones de paginas web. Estuve encargado del Frontend de dicho dashboard.",
-                isMobile: false,
-                activities: [
-                    "Desarrollo de Dashboard interactivo.",
-                    "Gestión de estados globales complejos.",
-                    "Implementación de sistema de roles y permisos.",
-                    "Consumir API REST para funcionalidades como creacion de usuarios, creacion de terminos y condiciones y generacion de keys para conectar apps o paginas web."
-                ],
-                images: ["images/30.jpg", "images/31.jpg", "images/32.jpg", "images/33.jpg"]
-            },
-            "skyfleeter": {
-                title: "Skyfleeter",
-                stack: ".NET / C# / SQL",
-                role: "Desarrollador Full Stack",
-                desc: "Solución empresarial para monitoreo de flotas avanzada. Desarrollé varias actividades dentro de la aplicación web, detalladas abajo. Por motivos de confidencialidad las capturas de pantalla no estan disponibles, pero se pueden mostrar en una entrevista técnica.",
-                isMobile: false,
-                activities: [
-                    "Espacio para crear tickets de reportes para soporte técnico.",
-                    "Generacion de QR de codigos de equipos y su respectivo QR para su inspección.",
-                    "Generación de PDFs con dichos codigos QR.",
-                    "Implementación de sistema de notificaciones via mail para cuando los vehiculos necesiten mantenimiento o inspeccion.",
-                    "Sistema de ingreso de documentación de conductores.",
-                    "App movil para rastreo de viajes realizados por la flota, con geolocalización en tiempo real, control de viajes por conductor y control de rutas."
-                ],
-                images: ["images/34.jpg"]
+            en: {
+                "muravi": {
+                    title: "Muravi", stack: "Kotlin / Firebase", role: "Android Developer",
+                    desc: "Developed a robust architecture for real-time stock tracking by size, color, and season, integrating a dynamic sales module that generates automatic profitability reports.",
+                    isMobile: true,
+                    activities: ["Scalable MVVM architecture design.", "Firebase integration for stock control.", "Biometric security integration.", "Automated testing of critical components.", "CRUD development for item management and sales reporting."],
+                    images: ["images/16.jpeg", "images/17.jpeg", "images/18.jpg", "images/19.jpg", "images/20.jpg", "images/21.jpg", "images/22.jpg", "images/23.jpg"]
+                },
+                "salon": {
+                    title: "Salon App", stack: "Java / Firebase", role: "Android Developer",
+                    desc: "Developed a mobile application for beauty salon service management, integrating a real-time booking system and push notifications.",
+                    isMobile: true,
+                    activities: ["Scalable MVVM architecture design.", "Firebase integration for appointment control.", "CRUD development for appointment management."],
+                    images: ["images/1.jpeg", "images/2.jpeg", "images/3.jpeg", "images/4.jpeg"]
+                },
+                "dentist": {
+                    title: "Dentist App", stack: "Java / Firebase", role: "Android Developer",
+                    desc: "Developed a native Android mobile application to manage dental clinic appointments. It includes a notification and reminder system, along with oral hygiene tips.",
+                    isMobile: true,
+                    activities: ["Scalable MVVM architecture design.", "Firebase integration for appointment control.", "Automated testing of critical components.", "CRUD development for appointment creation.", "Push notification integration for appointment reminders and hygiene tips."],
+                    images: ["images/5.jpeg", "images/6.jpeg", "images/7.jpeg", "images/8.jpeg", "images/9.jpeg", "images/10.jpeg", "images/11.jpeg", "images/12.jpeg", "images/13.jpeg", "images/14.jpeg", "images/15.jpeg"]
+                },
+                "privatikaL": {
+                    title: "Privatika Landing", stack: "vite.js / Tailwind CSS", role: "Frontend Developer",
+                    desc: "Developed a high-performance landing page for Privatika, SEO-optimized using Vite.js and Tailwind CSS for a smooth and engaging user experience.",
+                    isMobile: false,
+                    activities: ["Reusable UI component development.", "SEO and Core Web Vitals optimization.", "Implementation of smooth animations.", "REST API consumption for email dispatch."],
+                    images: ["images/24.jpg", "images/25.jpg", "images/26.jpg", "images/27.jpg", "images/28.jpg", "images/29.jpg"]
+                },
+                "privatika": {
+                    title: "Privatika App", stack: "vite.js / Tailwind CSS", role: "Frontend Developer",
+                    desc: "Developed a robust administrative panel for managing website Terms and Conditions. Responsible for the entire dashboard frontend.",
+                    isMobile: false,
+                    activities: ["Interactive Dashboard development.", "Complex global state management.", "Role and permission system implementation.", "REST API consumption for user creation, terms management, and app connection keys."],
+                    images: ["images/30.jpg", "images/31.jpg", "images/32.jpg", "images/33.jpg"]
+                },
+                "skyfleeter": {
+                    title: "Skyfleeter", stack: ".NET / C# / SQL", role: "Full Stack Developer",
+                    desc: "Enterprise solution for advanced fleet monitoring. I developed several activities within the web application. Due to confidentiality, screenshots are limited but can be shown during technical interviews.",
+                    isMobile: false,
+                    activities: ["Support ticket system creation.", "QR code generation for equipment and inspections.", "PDF generation with integrated QR codes.", "Email notification system for vehicle maintenance/inspections.", "Driver documentation management system.", "Mobile app for trip tracking with real-time geolocation and route control."],
+                    images: ["images/34.jpg"]
+                }
             }
         };
 
+        const uiTexts = {
+            es: { back: "Volver a portafolio", label_tech: "TECNOLOGÍAS", label_role: "MI ROL", label_logic: "LÓGICA_CORE", label_contrib: "CONTRIBUCIONES_CLAVE", lang_btn: "ENGLISH", lang_flag: "fi fi-us" },
+            en: { back: "Back to Portfolio", label_tech: "TECHNOLOGIES", label_role: "MY ROLE", label_logic: "CORE_LOGIC", label_contrib: "KEY_CONTRIBUTIONS", lang_btn: "ESPAÑOL", lang_flag: "fi fi-sv" }
+        };
+
+        let currentLang = new URLSearchParams(window.location.search).get('lang') || 'es';
         let currentIndex = 0;
         let totalImages = 0;
         let activeTrack = null;
 
-        function moveSlide(direction) {
-            if (totalImages <= 1) return;
-            currentIndex = (currentIndex + direction + totalImages) % totalImages;
-            gsap.to(activeTrack, { x: `-${currentIndex * 100}%`, duration: 0.8, ease: "power3.out" });
+        function updateBackBtn() {
+            document.getElementById('back-to-index').href = `index.html?lang=${currentLang}`;
         }
 
-        function loadProject() {
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
             const params = new URLSearchParams(window.location.search);
-            const projectId = params.get('id');
-            const data = projectsData[projectId] || projectsData["muravi"];
+            const projectId = params.get('id') || 'muravi';
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?id=${projectId}&lang=${currentLang}`;
+            window.history.pushState({path:newUrl},'',newUrl);
+            
+            gsap.to(".info-col", { opacity: 0, x: -20, duration: 0.3, onComplete: () => {
+                loadProjectContent();
+                gsap.to(".info-col", { opacity: 1, x: 0, duration: 0.3 });
+            }});
+        }
 
-            // Texto básico
+        function loadProjectContent() {
+            const params = new URLSearchParams(window.location.search);
+            const projectId = params.get('id') || 'muravi';
+            const data = projectsData[currentLang][projectId];
+
+            updateBackBtn();
+
+            // Traducción de UI
+            document.querySelectorAll('[data-key]').forEach(el => {
+                el.innerText = uiTexts[currentLang][el.getAttribute('data-key')];
+            });
+            document.getElementById('lang-text').innerText = uiTexts[currentLang].lang_btn;
+            document.getElementById('lang-flag').className = uiTexts[currentLang].lang_flag;
+
+            // Datos del Proyecto
             document.getElementById('p-title').innerText = data.title;
             document.getElementById('p-stack').innerText = data.stack;
             document.getElementById('p-role').innerText = data.role;
             document.getElementById('p-desc').innerText = data.desc;
 
-            // Cargar Actividades
             const activityContainer = document.getElementById('p-activities');
-            activityContainer.innerHTML = ""; // Limpiar
+            activityContainer.innerHTML = "";
             data.activities.forEach(act => {
                 const li = document.createElement('li');
                 li.className = "activity-item";
@@ -276,31 +292,39 @@
                 activityContainer.appendChild(li);
             });
 
-            // Lógica de Frames
-            const isMobile = data.isMobile;
-            const frameId = isMobile ? 'frame-mobile' : 'frame-desktop';
-            const trackId = isMobile ? 'carousel-mobile' : 'carousel-desktop';
+            // Frame logic
+            const frameId = data.isMobile ? 'frame-mobile' : 'frame-desktop';
+            const trackId = data.isMobile ? 'carousel-mobile' : 'carousel-desktop';
+            
+            document.getElementById('frame-mobile').style.display = 'none';
+            document.getElementById('frame-desktop').style.display = 'none';
             
             const activeFrame = document.getElementById(frameId);
             activeTrack = document.getElementById(trackId);
             activeFrame.style.display = 'block';
 
-            // Cargar Imágenes
+            // Siempre recargamos el carrusel para evitar errores de cambio de proyecto
+            activeTrack.innerHTML = "";
             totalImages = data.images.length;
+            currentIndex = 0;
+            gsap.set(activeTrack, { x: "0%" });
+            
             data.images.forEach(imgSrc => {
                 const img = document.createElement('img');
                 img.src = imgSrc;
                 activeTrack.appendChild(img);
             });
-
-            // Animaciones de entrada
-            gsap.from(".info-col", { opacity: 0, x: -30, duration: 1 });
-            gsap.from(".activity-item", { opacity: 0, x: -20, duration: 0.5, stagger: 0.1, delay: 0.5 });
-            gsap.from(activeFrame, { opacity: 0, scale: 0.95, duration: 1.2, delay: 0.2 });
-
-            if(totalImages > 1) setInterval(() => moveSlide(1), 5000);
         }
 
+        function moveSlide(direction) {
+            if (totalImages <= 1) return;
+            currentIndex = (currentIndex + direction + totalImages) % totalImages;
+            gsap.to(activeTrack, { x: `-${currentIndex * 100}%`, duration: 0.8, ease: "power3.out" });
+        }
+
+        loadProjectContent();
+
+        // Background Animation
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -312,7 +336,6 @@
             requestAnimationFrame(animate);
         }
         animate();
-        loadProject();
     </script>
 </body>
 </html>
