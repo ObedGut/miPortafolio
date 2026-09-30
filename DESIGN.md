@@ -6,7 +6,7 @@ The palette remains nearly black (#080a09), ivory (#f3f5ef) and pale lime (#d6ec
 
 ## Composition
 
-A cinematic introduction, six continuous product stories, interactive technologies, approach, biography and contact. Desktop stories hold one viewport while the document scroll controls camera movement, image transitions and split-word headlines. Mobile uses the same vertical progression with stacked compositions. Hover is restrained and supports actual links. Technology chapters reveal in a shared sticky eclipse stage, beginning with AI and vibe coding and ending with WhatsApp API. Product scenes use 400vh of sticky travel on desktop and 380vh on mobile, with 20vh handoffs between projects. Product media occupy a 76vh stage on desktop.
+A cinematic introduction, five continuous product stories, interactive technologies, approach, biography and contact. Desktop stories hold one viewport while the document scroll controls camera movement, image transitions and split-word headlines. Mobile uses the same vertical progression with stacked compositions. Hover is restrained and supports actual links. Technology chapters reveal in a shared sticky eclipse stage, beginning with AI and vibe coding and ending with WhatsApp API. Product scenes use 500svh of sticky travel on desktop and 480svh on mobile, with 20vh handoffs between projects. Product media occupy a 76vh stage on desktop.
 
 ## Motion
 
@@ -16,7 +16,7 @@ Reduced motion or user pause removes cinematic positioning and exposes all conte
 
 ## Truthful imagery
 
-Five 6.4-second films are deterministic compositions from the user's original screenshots, not fictional app recordings. Skyfleeter uses typography because its screens are confidential. The original CVs and six cases remain. New tools are services only.
+Five 6.4-second films are deterministic compositions from the user's original screenshots, not fictional app recordings. Skyfleeter uses typography because its screens are confidential. The original CVs remain. Salon and dentist are retired; Grupo Innova leads the five visible case studies.
 
 Each project owns an accent and a subtle radial light field. Large titles exit at full size before the product enters. Three real interface planes share a single reversible timeline: reveal, camera push, deliberate hold, then a spatial transition. Mobile apps move in depth; wide web screens zoom into legible detail on narrow devices. The last screen leaves before the full-sized personal contribution statement appears. There are no detached detail cards or shrinking headlines. AI has a typographic idea → judgment → product sequence, and the close foregrounds William's name and disciplines.
 

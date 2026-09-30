@@ -12,7 +12,7 @@ El paquete no contiene la configuración ni los identificadores del alojamiento 
 
 Cada proyecto se presenta como una escena de producto: titulares por palabras, acercamiento de la interfaz, secuencia de planos animados y explicación del enfoque. El scroll avanza y retrocede por las escenas. No hay arrastre, carrusel, contadores, numeración de secciones ni viñetas.
 
-La sección de tecnologías se presenta en seis escenas de eclipse controladas por scroll y revela sus textos progresivamente: IA aplicada y vibe coding primero, después Next.js, WordPress, WooCommerce, JavaScript, Kotlin, Swift, React Native, Odoo, .NET, Laravel y n8n; WhatsApp API cierra la secuencia. Estas capacidades se mantienen como habilidades y servicios, sin añadir casos de clientes.
+La sección de tecnologías se presenta en seis escenas de eclipse controladas por scroll y revela sus textos progresivamente: IA aplicada y vibe coding primero, después Next.js, WordPress, React y Vite, JavaScript, Kotlin, Swift, React Native, Odoo, .NET, Laravel y n8n; WhatsApp API cierra la secuencia. Las tecnologías se presentan como habilidades; Grupo Innova cuenta además con un caso detallado de automatización y panel.
 
 ## Vídeos
 
@@ -32,7 +32,7 @@ El botón Pausar y la preferencia del sistema de movimiento reducido muestran un
 
 `styles.css`: tipografía, composición y adaptación a pantallas.
 
-`projects-data.js` y `narratives.js`: contribuciones y enfoque de los seis proyectos.
+`projects-data.js` y `narratives.js`: contribuciones y enfoque de los proyectos.
 
 `proyecto.html`: detalle de los casos, sin viñetas ni contadores.
 
@@ -58,4 +58,14 @@ El hero utiliza un único vídeo local: `films/black-hole-journey.mp4`. Es un re
 
 Los primeros seis segundos forman el bucle inicial. Al avanzar, se conserva el fotograma actual, se completa esa fase del giro mientras sale el texto y el scroll recorre la misma película hasta entrar. El giro y el avance están unidos en los fotogramas. Al detener el scroll queda fija toda la escena y al retroceder se recorre la misma toma hacia atrás. Pausar, movimiento reducido y cambiar de pestaña detienen la reproducción. El póster es el primer fotograma del mismo vídeo.
 
-En tecnologías, el destello revela el logo del nombre activo. Vite sustituye a WooCommerce; React se suma a Next.js, JavaScript y WordPress. React Native se mantiene en móvil. Las categorías sin marca propia (IA, Vibe coding, Webhooks, APIs) usan su nombre tipográfico. Los logos se incluyen localmente desde Simple Icons 16.24.1 (CC0).
+En tecnologías, el destello revela el logo del nombre activo. Vite sustituye a React y Vite; React se suma a Next.js, JavaScript y WordPress. React Native se mantiene en móvil. Las categorías sin marca propia (IA, Vibe coding, Webhooks, APIs) usan su nombre tipográfico. Los logos se incluyen localmente desde Simple Icons 16.24.1 (CC0).
+
+## Grupo Innova y retorno al recorrido
+Grupo Innova aparece primero. El caso incorpora las 17 capturas suministradas, organizadas por función y con datos personales, conversaciones y valores operativos sensibles ocultos en los propios archivos publicados. Las capturas sin censura no se incluyen. Las imágenes con datos privados se editaron con la herramienta de imágenes, conservando la estructura y los controles; las demás se mantienen como fueron aportadas.
+
+“Ver cómo lo abordé” guarda el punto del recorrido y el estado de la galería. “Volver al recorrido” recupera esa posición; también se contempla Atrás del navegador. La información de retorno se guarda solo en la sesión de la pestaña.
+
+
+Actualización: entrada astronómica sincronizada con la carga del video, Imprimaenlinea.com como segundo proyecto y regreso flotante en todos los casos. El proyecto documenta WordPress, WooCommerce, Ubuntu y la responsabilidad sobre cinco sitios del grupo.
+
+Entrada cinematográfica: prólogo de video local con movimiento de cámara, título personal y fundido sincronizado al hero. No incluye botón de salto. Respeta movimiento reducido y omite el prólogo al volver a un proyecto.

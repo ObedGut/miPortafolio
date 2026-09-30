@@ -1,7 +1,7 @@
 (() => {
 'use strict';
 const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
-const order=['privatikaL','privatika','skyfleeter','muravi','salon','dentist'];
+const order=['innova','imprima','privatikaL','privatika','skyfleeter','muravi'];
 const params=new URLSearchParams(location.search);
 let lang=params.get('lang')==='en'?'en':'es',userPaused=false;
 try{userPaused=localStorage.getItem('wg-motion')==='paused';}catch{}
@@ -22,7 +22,54 @@ function loadHeroFilm(source){
  return heroFilmResource;
 }
 const motionEnabled=()=>!userPaused&&!reduced.matches&&!!window.gsap&&!!window.ScrollTrigger;
+let entranceFinished=!document.documentElement.classList.contains('entrance-loading');
+let entranceLeaving=false,heroReady=false,prologueStarted=0,entranceDelay;
+const loader=$('#mission-loader'),prologue=$('.mission-film');
+const lockEntrance=locked=>{$$('body > nav,body > main,body > footer,body > .skip-link').forEach(el=>el.inert=locked);};
+function revealEntrance(failed=false){
+ if(entranceFinished||entranceLeaving)return;
+ const remaining=prologueStarted?4600-(performance.now()-prologueStarted):0;
+ if(!failed&&remaining>0){clearTimeout(entranceDelay);entranceDelay=setTimeout(()=>revealEntrance(),remaining);return;}
+ entranceLeaving=true;clearTimeout(entranceTimeout);clearTimeout(entranceDelay);
+ const hero=$('.hero-film');
+ if(motionEnabled()&&scrollY<100)gsap.set('.intro-copy .split-word',{yPercent:105,opacity:0});
+ // Both movies share the same orbit: align their frames before dissolving.
+ if(hero?.readyState>=2&&prologue?.readyState>=2){
+  try{hero.currentTime=Math.max(0,(prologue.currentTime-3)%6);}catch{}
+  hero.play()?.catch(()=>{});
+ }
+ loader?.classList.add('is-departing');
+ const finish=()=>{
+  entranceFinished=true;loader?.remove();prologue?.pause();
+  document.documentElement.classList.remove('entrance-loading');lockEntrance(false);lenis?.start();
+  if(motionEnabled()&&scrollY<100)gsap.fromTo('.intro-copy .split-word',{yPercent:105,opacity:0},{yPercent:0,opacity:1,duration:1.15,stagger:.065,ease:'expo.out'});
+  if(hero)films.get(hero)?.update(0);
+ };
+ setTimeout(finish,reduced.matches?0:1600);
+}
+const entranceTimeout=setTimeout(()=>revealEntrance(true),18000);
+if(!entranceFinished&&prologue){
+ lockEntrance(true);
+ prologue.src='films/portfolio-prologue-hd.mp4';prologue.preload='auto';prologue.muted=true;
+ const begin=()=>{
+  if(prologueStarted||entranceLeaving)return;
+  prologueStarted=performance.now();loader.classList.add('is-playing');
+  prologue.play()?.catch(()=>{});
+  if(heroReady)revealEntrance();
+ };
+ prologue.addEventListener('loadeddata',begin,{once:true});
+ prologue.addEventListener('timeupdate',()=>{if(prologue.currentTime>=8.95)prologue.currentTime=3;});
+ prologue.addEventListener('ended',()=>{prologue.currentTime=3;prologue.play()?.catch(()=>{});});
+ prologue.addEventListener('error',()=>{loader.classList.add('is-playing');if(heroReady)revealEntrance(true);},{once:true});
+ prologue.load();
+}
+async function filmEntranceReady(){
+ await document.fonts?.ready;heroReady=true;
+ if(prologueStarted||prologue?.error)revealEntrance();
+}
 const headlines={
+ imprima:{es:'Una experiencia que invita a comprar.',en:'An experience built for shopping.'},
+ innova:{es:'Cada conversación. Con continuidad.',en:'Every conversation. Connected.'},
  privatikaL:{es:'Una primera impresión. Que lo deja claro.',en:'A first impression. That makes it clear.'},
  privatika:{es:'La complejidad. Bajo control.',en:'Complexity. Under control.'},
  skyfleeter:{es:'Toda una operación. Conectada.',en:'An entire operation. Connected.'},
@@ -31,6 +78,8 @@ const headlines={
  dentist:{es:'La atención continúa. Más allá de la cita.',en:'Care continues. Beyond the appointment.'}
 };
 const projectArt={
+ imprima:{color:'#ffac87',glow:'201,85,40',shots:['imprima/screen-0.png','imprima/screen-2.png','imprima/screen-3.png'],es:'Cinco sitios. Experiencia, infraestructura y seguridad.',en:'Five websites. Experience, infrastructure and security.'},
+ innova:{color:'#78e6ba',glow:'36,161,112',shots:['innova/screen-01.png','innova/screen-04.png','innova/screen-16.png'],es:'Conecté IA, conversaciones y atención humana.',en:'I connected AI, conversations and human support.'},
  privatikaL:{color:'#7bd5ed',glow:'35,142,187',shots:['24.jpg','26.jpg','28.jpg'],es:'Diseñé el primer contacto. Cuidé cada interacción.',en:'I designed the first contact. And every interaction.'},
  privatika:{color:'#9daeff',glow:'72,94,208',shots:['30.jpg','31.jpg','33.jpg'],es:'Convertí operaciones complejas en una experiencia clara.',en:'I turned complex operations into a clear experience.'},
  skyfleeter:{color:'#a4d4b1',glow:'53,130,83',es:'Conecté funciones web y móviles con la operación real.',en:'I connected web and mobile features to real operations.'},
@@ -43,13 +92,45 @@ function renderProjects(){
  root.innerHTML=order.map(id=>{
   const n=caseNarratives[id],t=n[lang],art=projectArt[id];
   const media=id==='skyfleeter'?'<div class="fleet-scene" aria-label="'+text('Áreas de trabajo de Skyfleeter','Skyfleeter areas of work')+'"><span class="fleet-word">'+text('Vehículos','Vehicles')+'</span><span class="fleet-word">'+text('Conductores','Drivers')+'</span><span class="fleet-word">'+text('Viajes','Trips')+'</span></div>':'<div class="camera-reel">'+art.shots.map((src,i)=>'<figure class="camera-shot"><img src="images/'+src+'" loading="lazy" decoding="async" alt="'+t.title+' · '+text('Interfaz','Interface')+' '+(i+1)+'"></figure>').join('')+'</div>';
-  return '<article class="product-story '+(projectsData[lang][id].isMobile?'is-mobile-product':'')+'" id="work-'+id+'" style="--project-accent:'+art.color+';--project-glow:'+art.glow+'"><div class="product-stage"><div class="project-atmosphere" aria-hidden="true"></div><div class="product-intro"><h3 class="product-name">'+t.title+'</h3><p class="product-headline split-title">'+headlines[id][lang]+'</p></div><div class="product-media">'+media+'</div><div class="product-insight"><p class="insight-text split-title">'+art[lang]+'</p>'+(id==='skyfleeter'?'<p class="confidential-note">'+text('Interfaces confidenciales. Conoce mi contribución.','Confidential interfaces. Discover my contribution.')+'</p>':'')+'<a class="text-link case-link" href="'+link(id)+'">'+text('Cómo lo abordé','My approach')+' <span aria-hidden="true">↗</span></a></div></div></article>';
+  return '<article class="product-story '+(projectsData[lang][id].isMobile?'is-mobile-product':'')+'" id="work-'+id+'" style="--project-accent:'+art.color+';--project-glow:'+art.glow+'"><div class="product-stage"><div class="project-atmosphere" aria-hidden="true"></div><div class="product-intro"><h3 class="product-name">'+t.title+'</h3><p class="product-headline split-title">'+headlines[id][lang]+'</p></div><div class="product-media">'+media+'</div><div class="product-insight"><p class="insight-text split-title">'+art[lang]+'</p>'+(id==='skyfleeter'?'<p class="confidential-note">'+text('Interfaces confidenciales. Conoce mi contribución.','Confidential interfaces. Discover my contribution.')+'</p>':'')+'<a class="text-link case-link" href="'+link(id)+'">'+text('Ver cómo lo abordé','See my approach')+'</a></div></div></article>';
  }).join('');
+}
+function renderProjectGallery(){
+ if(!$('#proyectos'))return;
+ $('#project-gallery-ui')?.remove();
+ const ui=document.createElement('div');ui.id='project-gallery-ui';
+ ui.innerHTML='<button class="projects-fab" aria-haspopup="dialog" aria-controls="projects-dialog" tabindex="-1">'+text('Ver todos los proyectos','View all projects')+'</button><dialog id="projects-dialog" class="projects-dialog" aria-labelledby="gallery-title" data-lenis-prevent><div class="projects-dialog-heading"><h2 id="gallery-title">'+text('Explora los proyectos.','Explore the projects.')+'</h2><button class="gallery-close">'+text('Cerrar','Close')+'</button></div><div class="projects-grid">'+order.map(id=>{
+  const art=projectArt[id],title=caseNarratives[id][lang].title;
+  return '<a class="project-card" href="'+link(id)+'" style="--project-accent:'+art.color+'"><div class="project-card-media '+(projectsData[lang][id].isMobile?'is-phone':'')+'">'+(art.shots?'<img src="images/'+art.shots[0]+'" alt="" loading="lazy">':'<span>Skyfleeter</span>')+'</div><h3>'+title+'</h3><p>'+text('Ver cómo lo abordé','See my approach')+'</p></a>';
+ }).join('')+'</div></dialog>';
+ document.body.append(ui);
+}
+function initProjectGallery(signal){
+ const fab=$('.projects-fab'),dialog=$('#projects-dialog'),section=$('#proyectos');
+ if(!fab)return;
+ const sync=()=>{const r=section.getBoundingClientRect(),visible=r.top<innerHeight*.65&&r.bottom>innerHeight*.35;fab.classList.toggle('is-visible',visible);fab.tabIndex=visible?0:-1;fab.setAttribute('aria-hidden',String(!visible));};
+ let queued=false;
+ window.addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(()=>{queued=false;if(!signal.aborted)sync();});}},{passive:true,signal});
+ window.addEventListener('resize',sync,{signal});
+ fab.addEventListener('click',()=>{lenis?.stop();dialog.showModal();dialog.scrollTop=0;},{signal});
+ dialog.querySelector('.gallery-close').addEventListener('click',()=>dialog.close(),{signal});
+ dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}},{signal});
+ dialog.addEventListener('close',()=>{lenis?.start();sync();},{signal});
+ sync();
+}
+function renderImprimaDetails(){
+ const captions=[['Portada y presentación comercial','Homepage and commercial presentation'],['Colecciones y navegación por categorías','Collections and category navigation'],['Ficha de producto, paquetes y carrito','Product details, bundles and cart'],['Campaña de temporada','Seasonal campaign'],['Catálogo, búsqueda y orden de productos','Catalogue, search and product sorting']];
+ const sites=['imprimaenlinea.com','disenarte.com.sv','innovaciondigital.com.sv','imprimelotodo.com.sv','innovarte.com.sv'];
+ return '<section class="case-chapter"><div class="case-chapter-copy"><h2>'+text('Un ecosistema de cinco sitios.','A five-website ecosystem.')+'</h2><p>'+text('Mi responsabilidad abarcó la experiencia de usuario, el monitoreo de servidores y medidas de ciberseguridad. Las imágenes de este caso corresponden a Imprimaenlinea.com.','My responsibility covered user experience, server monitoring and cybersecurity measures. The images in this case show Imprimaenlinea.com.')+'</p></div><div class="managed-sites">'+sites.map(site=>'<a href="https://'+site+'" target="_blank" rel="noopener">'+site+'</a>').join('')+'</div><div class="case-screens">'+captions.map((c,i)=>'<figure><a href="images/imprima/screen-'+i+'.png" target="_blank" rel="noopener"><img src="images/imprima/screen-'+i+'.png" loading="lazy" alt="'+c[lang==='es'?0:1]+'"></a><figcaption>'+c[lang==='es'?0:1]+'</figcaption></figure>').join('')+'</div></section>';
+}
+function renderInnovaDetails(){
+ const sections=caseNarratives.innova.chapters;
+ return '<div class="innova-case"><p class="privacy-note">'+text('Capturas de la plataforma con datos personales y contenido privado ocultos.','Platform screenshots with personal data and private content concealed.')+'</p>'+sections.map(section=>'<section class="case-chapter"><div class="case-chapter-copy"><h2>'+section[lang][0]+'</h2><div>'+section[lang].slice(1).map(p=>'<p>'+p+'</p>').join('')+'</div></div><div class="case-screens">'+section.screens.map(([i,es,en])=>'<figure><a href="images/innova/screen-'+String(i).padStart(2,'0')+'.png" target="_blank" rel="noopener" aria-label="'+text('Ampliar: ','Enlarge: ')+text(es,en)+'"><img src="images/innova/screen-'+String(i).padStart(2,'0')+'.png" loading="lazy" alt="'+text(es,en)+'"></a><figcaption>'+text(es,en)+'</figcaption></figure>').join('')+'</div></section>').join('')+'<section class="case-chapter-copy case-outcome"><h2>'+text('Lo que aporta a la operación.','What it brings to operations.')+'</h2><div><p>'+text('Un mismo lugar para atender, consultar el historial y supervisar la automatización. Las conversaciones pueden continuar entre el bot y el equipo con controles explícitos, y los reportes permiten identificar demanda, esperas y carga de atención.','One place to respond, review history and supervise automation. Conversations can move between the bot and the team with explicit controls, while reports reveal demand, waiting times and support workload.')+'</p><p>'+text('El trabajo continuó con mejoras de rendimiento: carga paginada del historial y límites de concurrencia y caché para adjuntos. La calidad del contexto y la interpretación de promociones sigue siendo un área de iteración; no se presenta como una capacidad infalible.','Further work focused on performance through paginated history and bounded attachment concurrency and caching. Context quality and promotion interpretation remain areas of iteration, not infallible capabilities.')+'</p></div></section></div>';
 }
  function renderCase(){
   if(!$('#case-content'))return;
-  const id=params.get('id')||'privatikaL';
-  if(!caseNarratives[id]){$('#case-content').innerHTML='<h1 class="case-title split-title">'+text('Proyecto no encontrado','Project not found')+'</h1><a class="pill" href="index.html#proyectos">'+text('Explorar proyectos','Explore work')+'</a>';return;}
+  const id=params.get('id')||order[0];
+  if(!order.includes(id)||!caseNarratives[id]){$('#case-content').innerHTML='<h1 class="case-title split-title">'+text('Proyecto no encontrado','Project not found')+'</h1><a class="pill" href="index.html#proyectos">'+text('Explorar proyectos','Explore work')+'</a>';return;}
   const n=caseNarratives[id],d=projectsData[lang][id],t=n[lang];
   document.title=d.title+' — William Gutierrez';
   const chapters=[[text('El reto','The challenge'),t.challenge],[text('Cómo lo abordé','My approach'),t.approach],[text('La solución','The solution'),t.solution]];
@@ -57,10 +138,15 @@ function renderProjects(){
   html+=chapters.map(c=>'<section class="case-story"><h2 class="split-title">'+c[0]+'</h2><p>'+c[1]+'</p></section>').join('');
   html+='<p class="case-focus">'+t.focus+'</p><section class="case-contributions"><h2 class="split-title">'+text('Contribuciones en detalle','Contributions in detail')+'</h2><div class="contributions-prose">'+d.activities.map(a=>'<p>'+a+'</p>').join('')+'</div></section>';
   if(id==='skyfleeter')html+='<section class="case-story"><h2 class="split-title">'+text('Sobre las capturas','About the screenshots')+'</h2><p>'+text('Por confidencialidad, las capturas no se publican aquí. Podemos conversar sobre las contribuciones durante una entrevista técnica.','Screenshots are not published here for confidentiality. We can discuss the contributions during a technical interview.')+'</p></section>';
+  else if(id==='innova')html+=renderInnovaDetails();
+  else if(id==='imprima')html+=renderImprimaDetails();
   else html+='<h2 class="gallery-heading">'+text('Dentro del producto','Inside the product')+'</h2><div class="gallery '+(d.isMobile?'mobile':'')+'">'+d.images.map((src,i)=>'<figure><img src="'+src+'" loading="lazy" decoding="async" alt="'+d.title+' · '+text('Pantalla','Screen')+' '+(i+1)+'"></figure>').join('')+'</div>';
   const next=order[(order.indexOf(id)+1)%order.length];
   html+='<a class="next-case" href="'+link(next)+'"><span>'+text('Siguiente proyecto','Next project')+'</span><span>'+projectsData[lang][next].title+' ↗</span></a>';
+  html+='<a class="pill back-link return-bottom" href="index.html?lang='+lang+'&resume=1">'+text('Volver al recorrido','Back to the journey')+'</a>';
   $('#case-content').innerHTML=html;
+  if(!$('.case-return-fab')){const a=document.createElement('a');a.className='pill back-link case-return-fab';document.body.append(a);}
+  $$('.back-link').forEach(a=>{a.href='index.html?lang='+lang+'&resume=1';a.textContent=text('Volver al recorrido','Back to the journey');});
  }
 function renderSkills(){
  const root=$('#technology-scenes');if(!root)return;
@@ -163,7 +249,7 @@ function updateLanguage(){
  $$('[data-es]').forEach(el=>el.textContent=el.dataset[lang]);
  $('#language').textContent=lang==='es'?'EN':'ES';$('#language').ariaLabel=lang==='es'?'Switch to English':'Cambiar a español';
  $$('a[href^="index.html"]').forEach(a=>{const u=new URL(a.getAttribute('href'),location.href);u.searchParams.set('lang',lang);a.href='index.html'+u.search+u.hash;});
- renderProjects();renderCase();renderSkills();decorateArrows();
+ renderProjects();renderProjectGallery();renderCase();renderSkills();decorateArrows();
 }
 function updateMotionButton(){
  const paused=userPaused||reduced.matches;
@@ -185,7 +271,7 @@ function prepareFilms(){
   if(Math.abs(video.currentTime-state.target)>1/60){try{video.currentTime=state.target;}catch{}}
  };
  const play=()=>{
-  if(state.playing||document.hidden||!motionEnabled())return;
+  if(state.playing||document.hidden||!motionEnabled()||!entranceFinished)return;
   if(video.currentTime>=loopEnd)video.currentTime=0;
   state.playing=true;video.play()?.catch(()=>{state.playing=false;});
  };
@@ -214,10 +300,10 @@ function prepareFilms(){
   frameCallback=video.requestVideoFrameCallback(check);
   signal.addEventListener('abort',()=>video.cancelVideoFrameCallback(frameCallback),{once:true});
  }else video.addEventListener('timeupdate',idleBoundary,{signal});
- video.addEventListener('loadeddata',()=>{state.ready=true;video.parentElement.classList.add('film-ready');state.update(state.time);},{signal});
+ video.addEventListener('loadeddata',()=>{state.ready=true;video.parentElement.classList.add('film-ready');filmEntranceReady();state.update(state.time);},{signal});
  video.addEventListener('seeked',seek,{signal});
  video.addEventListener('canplay',seek,{signal});
- video.addEventListener('error',()=>{video.parentElement.classList.remove('film-ready');pause();},{signal});
+ video.addEventListener('error',()=>{video.parentElement.classList.remove('film-ready');pause();revealEntrance(true);},{signal});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();else state.update(state.time);},{signal});
  if(!video.getAttribute('src')){
   loadHeroFilm(video.dataset.src).then(url=>{
@@ -225,9 +311,33 @@ function prepareFilms(){
    video.src=url;video.preload='auto';video.load();
   }).catch(()=>{
    // Keep the same poster if media cannot be fetched; never hide page content.
-   if(!signal.aborted)video.parentElement.classList.remove('film-ready');
+   if(!signal.aborted){video.parentElement.classList.remove('film-ready');revealEntrance(true);}
   });
  }else state.update(0);
+}
+function saveJourneyPosition(){
+ const anchor=captureReadingPosition(),dialog=$('#projects-dialog');
+ const state={y:scrollY,id:anchor?.id,ratio:anchor?.ratio,gallery:!!dialog?.open,galleryY:dialog?.scrollTop||0};
+ history.replaceState({...history.state,wgJourney:state},'');
+ try{sessionStorage.setItem('wg-journey',JSON.stringify(state));}catch{}
+}
+function restoreJourneyPosition(fromCache=false){
+ if(!document.body.classList.contains('home-page'))return false;
+ const back=performance.getEntriesByType('navigation')[0]?.type==='back_forward';
+ if(!fromCache&&!back&&!params.has('resume'))return false;
+ let state=history.state?.wgJourney;
+ if(params.has('resume')){try{state=JSON.parse(sessionStorage.getItem('wg-journey'))||state;}catch{}}
+ if(!state)return false;
+ let y=state.y;
+ const el=state.id&&document.getElementById(state.id);
+ if(el&&Number.isFinite(state.ratio))y=el.offsetTop+state.ratio*Math.max(1,el.offsetHeight-innerHeight);
+ lenis?.start();if(lenis)lenis.scrollTo(y,{immediate:true,force:true});else scrollTo(0,y);
+ window.ScrollTrigger?.update();
+ window.ScrollTrigger?.getAll().forEach(st=>{if(st.vars.scrub&&st.animation){st.animation.progress(st.progress);st.getTween()?.progress?.(1);}});
+ if(state.gallery){const dialog=$('#projects-dialog');if(dialog&&!dialog.open)dialog.showModal();if(dialog)dialog.scrollTop=state.galleryY;lenis?.stop();}
+ window.dispatchEvent(new Event('scroll'));
+ if(params.has('resume')){const u=new URL(location.href);u.searchParams.delete('resume');history.replaceState({...history.state,wgJourney:state},'',u);}
+ return true;
 }
 function captureReadingPosition(){
  const els=$$('.intro,.product-story,#tecnologias,#enfoque,#sobre-mi,footer');
@@ -245,6 +355,7 @@ function cleanup(){
 function initMotion(first=false){
  updateMotionButton();document.body.classList.toggle('motion-off',!motionEnabled());
  events=new AbortController();const signal=events.signal;
+ initProjectGallery(signal);
  if(!motionEnabled()){document.documentElement.classList.remove('motion-pending');return;}
  gsap.registerPlugin(ScrollTrigger);document.body.classList.add('motion-ready');splitWords();
  if(window.Lenis){lenis=new Lenis({duration:.9,smoothWheel:true,syncTouch:false});lenis.on('scroll',ScrollTrigger.update);tick=t=>lenis.raf(t*1000);gsap.ticker.add(tick);}
@@ -318,7 +429,7 @@ function initMotion(first=false){
   }
  });
  ctx=gsap.context(()=>{
-  if(first&&$('.intro-copy'))gsap.from('.intro-copy .split-word',{yPercent:110,rotationX:-25,opacity:0,duration:.95,stagger:.07,ease:'expo.out'});
+  if(first&&entranceFinished&&$('.intro-copy'))gsap.from('.intro-copy .split-word',{yPercent:110,rotationX:-25,opacity:0,duration:.95,stagger:.07,ease:'expo.out'});
   $$('.section-intro .split-title,.approach .split-title,.about .split-title,footer .split-title,.language-section h3').forEach(el=>{
    gsap.from(el.querySelectorAll('.split-word'),{yPercent:90,opacity:0,rotationX:-25,stagger:{amount:.18},ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%',end:'top 45%',scrub:.6}});
   });
@@ -368,10 +479,12 @@ document.addEventListener('pointerdown',()=>document.body.classList.remove('keyb
 document.addEventListener('click',e=>{
  const a=e.target.closest('a');if(!a||e.defaultPrevented||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||a.hasAttribute('download')||a.target==='_blank')return;
  const u=new URL(a.href,location.href);if(u.origin!==location.origin)return;
+ if(document.body.classList.contains('home-page')&&u.pathname.endsWith('/proyecto.html'))saveJourneyPosition();
  if((u.pathname===location.pathname||u.pathname.endsWith('/index.html')&&location.pathname.endsWith('/'))&&u.hash){const el=document.getElementById(u.hash.slice(1));if(el){e.preventDefault();history.replaceState({},'',u);if(lenis&&e.detail!==0)lenis.scrollTo(el,{offset:0});else el.scrollIntoView({behavior:motionEnabled()&&e.detail!==0?'smooth':'instant'});}}
 });
 updateLanguage();initMotion(true);
-window.addEventListener('load',()=>{window.ScrollTrigger?.refresh();if(location.hash)document.getElementById(location.hash.slice(1))?.scrollIntoView({behavior:'instant'});});
+if(!entranceFinished){lenis?.stop();if(!motionEnabled())revealEntrance();}else{$('#mission-loader')?.remove();clearTimeout(entranceTimeout);}
+window.addEventListener('load',async()=>{await document.fonts?.ready;window.ScrollTrigger?.refresh();if(!restoreJourneyPosition()&&location.hash)document.getElementById(location.hash.slice(1))?.scrollIntoView({behavior:'instant'});});
 document.fonts?.ready.then(()=>window.ScrollTrigger?.refresh());
-window.addEventListener('pageshow',e=>{if(e.persisted)window.ScrollTrigger?.refresh();});
+window.addEventListener('pageshow',e=>{if(e.persisted){window.ScrollTrigger?.refresh();restoreJourneyPosition(true);}});
 })();

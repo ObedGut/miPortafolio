@@ -126,6 +126,61 @@ window.projectsData = {
       "images": [
         "images/34.jpg"
       ]
+    },
+    "innova": {
+      "title": "Grupo Innova",
+      "stack": "React / JavaScript / Python / n8n / WhatsApp Cloud API / Gemini / Whisper / PostgreSQL / Docker / DigitalOcean",
+      "role": "Desarrollo full stack, automatización e integración de IA",
+      "desc": "Automatización WhatsApp y Panel de Control para Grupo Innova.",
+      "isMobile": false,
+      "activities": [
+        "Diseñé un flujo que conecta la recepción de mensajes, la transcripción de audios, la clasificación con IA y el registro de solicitudes para el equipo comercial.",
+        "Desarrollé un panel React para consultar conversaciones, responder, compartir la atención, gestionar etiquetas y utilizar respuestas rápidas.",
+        "Incorporé controles por empresa y conversación: pausa del bot, recopilación de datos para cotización, promociones, horarios y excepciones.",
+        "Trabajé en la persistencia del historial y los adjuntos, la paginación de mensajes y la carga limitada de archivos para mejorar la experiencia del asesor.",
+        "Añadí reportes de actividad, cobertura del bot y tiempos de respuesta, diferenciando los envíos confirmados de los intentos fallidos.",
+        "Preparé los servicios con Docker y su despliegue en DigitalOcean, y fui ajustando el sistema a partir de incidencias de uso real."
+      ],
+      "images": [
+        "images/innova/screen-00.png",
+        "images/innova/screen-01.png",
+        "images/innova/screen-02.png",
+        "images/innova/screen-03.png",
+        "images/innova/screen-04.png",
+        "images/innova/screen-05.png",
+        "images/innova/screen-06.png",
+        "images/innova/screen-07.png",
+        "images/innova/screen-08.png",
+        "images/innova/screen-09.png",
+        "images/innova/screen-10.png",
+        "images/innova/screen-11.png",
+        "images/innova/screen-12.png",
+        "images/innova/screen-13.png",
+        "images/innova/screen-14.png",
+        "images/innova/screen-15.png",
+        "images/innova/screen-16.png"
+      ]
+    },
+    "imprima": {
+      "title": "Imprimaenlinea.com",
+      "stack": "WordPress / WooCommerce / Ubuntu",
+      "role": "Gestión web, experiencia de usuario y operación de servidores",
+      "desc": "Responsable de cinco sitios de Grupo Innova, con mejoras de experiencia de usuario, monitoreo de servidores Ubuntu y medidas de ciberseguridad.",
+      "isMobile": false,
+      "activities": [
+        "Mejoras de experiencia de usuario en sitios WordPress: navegación, presentación del contenido y recorrido por el catálogo.",
+        "Trabajo sobre el entorno WooCommerce de Imprimaenlinea.com, conectando la experiencia comercial con la presentación de productos.",
+        "Monitoreo de los servidores Ubuntu que soportaban los sitios y seguimiento de su operación.",
+        "Aplicación de medidas de ciberseguridad como parte de la gestión técnica del entorno web.",
+        "Responsabilidad sobre Imprimaenlinea.com, disenarte.com.sv, innovaciondigital.com.sv, imprimelotodo.com.sv e innovarte.com.sv."
+      ],
+      "images": [
+        "images/imprima/screen-0.png",
+        "images/imprima/screen-1.png",
+        "images/imprima/screen-2.png",
+        "images/imprima/screen-3.png",
+        "images/imprima/screen-4.png"
+      ]
     }
   },
   "en": {
@@ -254,6 +309,61 @@ window.projectsData = {
       ],
       "images": [
         "images/34.jpg"
+      ]
+    },
+    "innova": {
+      "title": "Grupo Innova",
+      "stack": "React / JavaScript / Python / n8n / WhatsApp Cloud API / Gemini / Whisper / PostgreSQL / Docker / DigitalOcean",
+      "role": "Full-stack development, automation and AI integration",
+      "desc": "WhatsApp automation and control panel for Grupo Innova.",
+      "isMobile": false,
+      "activities": [
+        "I designed a flow connecting message intake, audio transcription, AI classification and request registration for the sales team.",
+        "I developed a React panel for conversations, replies, shared support, labels and quick responses.",
+        "I added per-company and per-conversation controls for bot pauses, quote intake, promotions, schedules and exceptions.",
+        "I worked on persistent history and attachments, message pagination and limited concurrent file loading to improve the advisor experience.",
+        "I added activity, bot coverage and response-time reports that separate confirmed sends from failed attempts.",
+        "I containerized services with Docker for deployment on DigitalOcean and iterated on the system using real operational incidents."
+      ],
+      "images": [
+        "images/innova/screen-00.png",
+        "images/innova/screen-01.png",
+        "images/innova/screen-02.png",
+        "images/innova/screen-03.png",
+        "images/innova/screen-04.png",
+        "images/innova/screen-05.png",
+        "images/innova/screen-06.png",
+        "images/innova/screen-07.png",
+        "images/innova/screen-08.png",
+        "images/innova/screen-09.png",
+        "images/innova/screen-10.png",
+        "images/innova/screen-11.png",
+        "images/innova/screen-12.png",
+        "images/innova/screen-13.png",
+        "images/innova/screen-14.png",
+        "images/innova/screen-15.png",
+        "images/innova/screen-16.png"
+      ]
+    },
+    "imprima": {
+      "title": "Imprimaenlinea.com",
+      "stack": "WordPress / WooCommerce / Ubuntu",
+      "role": "Website management, user experience and server operations",
+      "desc": "Responsible for five Grupo Innova websites, including user experience improvements, Ubuntu server monitoring and cybersecurity measures.",
+      "isMobile": false,
+      "activities": [
+        "User experience improvements across WordPress websites: navigation, content presentation and catalogue browsing.",
+        "Work on the Imprimaenlinea.com WooCommerce environment, connecting the shopping experience with product presentation.",
+        "Monitoring the Ubuntu servers supporting the websites and following up on their operation.",
+        "Application of cybersecurity measures as part of technical website management.",
+        "Responsibility for Imprimaenlinea.com, disenarte.com.sv, innovaciondigital.com.sv, imprimelotodo.com.sv and innovarte.com.sv."
+      ],
+      "images": [
+        "images/imprima/screen-0.png",
+        "images/imprima/screen-1.png",
+        "images/imprima/screen-2.png",
+        "images/imprima/screen-3.png",
+        "images/imprima/screen-4.png"
       ]
     }
   }
